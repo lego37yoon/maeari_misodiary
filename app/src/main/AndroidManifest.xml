@@ -78,7 +78,7 @@
         <activity
             android:name=".AppInfoActivity"
             android:label="@string/title_appinfo"
-            android:theme="@style/anotherTheme">
+            android:theme="@style/anotherTheme2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

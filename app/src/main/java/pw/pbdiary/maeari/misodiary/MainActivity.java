@@ -59,30 +59,6 @@ public class MainActivity extends AppCompatActivity {
     //뒤로가기 두 번으로 종료하기 위한 부분
     //private long pressedTime = 0;
 
-    //네비게이션 바 눌렸을 때 반응할 코드
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.nav_opench:
-                    mTextMessage.setText(R.string.title_home);
-                    mWebView.loadUrl("https://www.misodiary.net/main/opench/");
-                    return true;
-                case R.id.nav_michinrandom:
-                    mTextMessage.setText(R.string.title_michinrandom);
-                    mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
-                    return true;
-                case R.id.nav_profile:
-                    mTextMessage.setText(R.string.title_profile);
-                    mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
-                    return true;
-            }
-            return false;
-        }
-    };
-
     //처음 액티비티 실행될 때
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,26 +163,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mWebView.loadUrl("https://www.misodiary.net");
-        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        String status = getIntent().getStringExtra("status");
-
-        if(status != null) {
-            if (status.equals("profile")) {
-                mBottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
-                mTextMessage.setText(R.string.title_profile);
-                mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
-            } else if (status.equals("opench")) {
-                String openKeyword = getIntent().getStringExtra("openKeyword");
-                mTextMessage.setText(R.string.title_opench);
-                mBottomNavigationView.getMenu().findItem(R.id.nav_opench).setChecked(true);
-                mWebView.loadUrl(openKeyword);
-            } else if (status.equals("michinrandom")) {
-                mBottomNavigationView.getMenu().findItem(R.id.nav_michinrandom).setChecked(true);
-                mTextMessage.setText(R.string.title_michinrandom);
-                mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
-            }
-        }
 
         SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);
         pullRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
@@ -223,16 +179,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
             if(url.startsWith("https://www.misodiary.net/main/opench")) {
-                mBottomNavigationView.getMenu().findItem(R.id.nav_opench).setChecked(true);
                 mTextMessage.setText(R.string.title_opench);
                 view.loadUrl(url);
             } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
                 mTextMessage.setText(R.string.title_michinrandom);
-                mBottomNavigationView.getMenu().findItem(R.id.nav_michinrandom).setChecked(true);
                 view.loadUrl(url);
             } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
                 mTextMessage.setText(R.string.title_profile);
-                mBottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
                 view.loadUrl(url);
             } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
@@ -348,54 +301,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
         startActivity(intent);
     }
-    public void onAppInfoClicked(View v) {
-        Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
-        startActivity(intent);
-    }
-
-    /* @Override
-    public void onBackPressed() {
-        if (System.currentTimeMillis() > pressedTime + 2000) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_back), Toast.LENGTH_LONG).show();
-            return;
-        } else if (System.currentTimeMillis() <= pressedTime + 2000) {
-            super.onBackPressed();
-        }
-    } */
-
-    /* @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if(keyCode == KeyEvent.KEYCODE_BACK) {
-                if (System.currentTimeMillis() > pressedTime + 2000) {
-                    pressedTime = System.currentTimeMillis();
-                    if (mWebView.canGoBack()) {
-                        String url = mWebView.copyBackForwardList().getItemAtIndex(mWebView.copyBackForwardList().getCurrentIndex() - 1).getUrl();
-                        if (url.startsWith("https://www.misodiary.net/main/opench")) {
-                            mBottomNavigationView.getMenu().findItem(R.id.nav_opench).setChecked(true);
-                            mWebView.loadUrl(url);
-                        } else if (url.startsWith("https://www.misodiary.net/main/random_friends")) {
-                            mBottomNavigationView.getMenu().findItem(R.id.nav_michinrandom).setChecked(true);
-                            mWebView.loadUrl(url);
-                        } else if (url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                            mBottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
-                            mWebView.loadUrl(url);
-                        } else {
-                            mWebView.loadUrl(url);
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_back),Toast.LENGTH_LONG).show();
-                    }
-                }
-                if (System.currentTimeMillis() <= pressedTime +2000) {
-                    finish();
-                }
-            }
-
-        }
-        return super.onKeyDown(keyCode, event);
-    } */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

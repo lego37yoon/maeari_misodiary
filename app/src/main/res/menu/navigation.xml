@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/nav_opench"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:fontFamily="@font/bmhanna_air_ttf"
-        android:title="@string/navtitle_opench" />
+        android:title="@string/navtitle_opench"/>
 
     <item
         android:id="@+id/nav_michinrandom"
