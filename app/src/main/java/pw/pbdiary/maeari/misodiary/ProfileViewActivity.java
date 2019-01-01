@@ -346,10 +346,11 @@ public class ProfileViewActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                 } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    String status = "opench";
-                    intent.putExtra("status", status);
-                    startActivity(intent);
+                    if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        String status = "opench";
+                        intent.putExtra("status", status);
+                    }
                 } else {
                     try {
                         Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

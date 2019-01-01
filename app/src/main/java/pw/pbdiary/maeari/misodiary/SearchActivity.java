@@ -16,6 +16,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -229,7 +230,11 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodairy.net")){
-                view.loadUrl(url);
+                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    String status = "opench";
+                    intent.putExtra("status", status);
+                }
             } else {
                 try {
                     Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -292,12 +297,11 @@ public class SearchActivity extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-        File imageFile = File.createTempFile(
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-        return imageFile;
     }
 
     @Override
@@ -334,5 +338,4 @@ public class SearchActivity extends AppCompatActivity {
 
         return result;
     }
-
 }
