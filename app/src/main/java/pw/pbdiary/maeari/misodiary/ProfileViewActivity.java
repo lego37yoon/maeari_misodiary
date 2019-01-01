@@ -10,6 +10,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -297,5 +298,71 @@ public class ProfileViewActivity extends AppCompatActivity {
 
     public void onBackButtonPressed(View v){
         onBackPressed();
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(mWebView.canGoBack()) {
+                mWebView.goBack();
+                String url = mWebView.getOriginalUrl();
+                if (url.startsWith("https://www.misodiary.net/main")) {
+                    if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("openKeyword", url);
+                        String status = "opench";
+                        intent.putExtra("status", status);
+                    } else if (url.startsWith("https://www.misodiary.net/main/random_friends")) {
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        String status = "michinrandom";
+                        i.putExtra("status", status);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                    }
+                } else if (url.startsWith("https://www.misodiary.net/home/dashboard")) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    String status = "profile";
+                    i.putExtra("status", status);
+                    startActivity(i);
+                } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+                    Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+                    Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+                    String keyword = url.replace("https://www.misodiary.net/post/search/","");
+                    intent.putExtra("keyword",keyword);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+                    Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
+                    String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+                    intent.putExtra("postNumber",postNumber);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+                    Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
+                    String accountID = url.replace("https://www.misodiary.net/home/main/","");
+                    intent.putExtra("accountID",accountID);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    String status = "opench";
+                    intent.putExtra("status", status);
+                    startActivity(intent);
+                } else {
+                    try {
+                        Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(bi);
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                finish();
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

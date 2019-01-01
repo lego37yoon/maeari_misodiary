@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mTextMessage = (TextView) findViewById(R.id.title_main);
         mWebView = (WebView) findViewById(R.id.webView);
         mWebView.setWebViewClient(new misoWeb());
         CookieManager cM = CookieManager.getInstance();
@@ -162,7 +162,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
             }
         });
-        mWebView.loadUrl("https://www.misodiary.net");
+        if(getIntent().getStringExtra("status") != null) {
+            String status = getIntent().getStringExtra("status");
+            switch (status) {
+                case "opench":
+                    mTextMessage.setText(R.string.title_opench);
+                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    break;
+                case "michinrandom":
+                    mTextMessage.setText(R.string.title_michinrandom);
+                    mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                    break;
+                case "profile":
+                    mTextMessage.setText(R.string.title_profile);
+                    mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                    break;
+            }
+        } else {
+            mWebView.loadUrl("https://www.misodiary.net");
+        }
 
         SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);
         pullRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
@@ -209,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
+                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                    mTextMessage.setText(R.string.title_opench);
+                }
                 view.loadUrl(url);
             } else {
                 try {
@@ -357,5 +378,58 @@ public class MainActivity extends AppCompatActivity {
             cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
         }
         super.onResume();
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mTextMessage = findViewById(R.id.title_main);
+            if(mWebView.canGoBack()) {
+                mWebView.goBack();
+                String url = mWebView.getOriginalUrl();
+                if(url.startsWith("https://www.misodiary.net/main/opench")) {
+                    mTextMessage.setText(R.string.title_opench);
+                } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+                    mTextMessage.setText(R.string.title_michinrandom);
+                } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+                    mTextMessage.setText(R.string.title_profile);
+                } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+                    Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+                    Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+                    String keyword = url.replace("https://www.misodiary.net/post/search/","");
+                    intent.putExtra("keyword",keyword);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+                    Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
+                    String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+                    intent.putExtra("postNumber",postNumber);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+                    Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
+                    String accountID = url.replace("https://www.misodiary.net/home/main/","");
+                    intent.putExtra("accountID",accountID);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
+                    if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                        mTextMessage.setText(R.string.title_opench);
+                    }
+                } else {
+                    try {
+                        Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(bi);
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                finish();
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

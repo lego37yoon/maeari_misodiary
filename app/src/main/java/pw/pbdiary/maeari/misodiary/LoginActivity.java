@@ -16,6 +16,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -142,7 +144,11 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                view.loadUrl(url);
+                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    String status = "opench";
+                    intent.putExtra("status", status);
+                }
             } else {
                 try {
                     Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -153,5 +159,20 @@ public class LoginActivity extends AppCompatActivity {
             }
             return super.shouldOverrideUrlLoading(view, request);
         }
+    }
+
+    public void onBackatLogin(View view) {
+        finish();
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                finish();
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
