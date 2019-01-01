@@ -182,9 +182,14 @@ public class ProfileViewActivity extends AppCompatActivity {
                 intent.putExtra("keyword", keyword);
                 startActivity(intent);
             } else if (url.startsWith("https://www.misodiary.net/post/single")) {
-                String postNumber = url.replace("https://www.misodiary/net/post/search/","");
-                mWebView.loadUrl("https://www.misodiary.net/post/single/"+postNumber);
-            } else if (url.startsWith("https://www.misodiary.net")){
+                Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
+                String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+                intent.putExtra("postNumber",postNumber);
+                startActivity(intent);
+            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            } else if (url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 view.loadUrl(url);
             } else {
                 try {

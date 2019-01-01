@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/anotherTheme2"
+            android:theme="@style/searchTheme"
             android:exported="false">
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"

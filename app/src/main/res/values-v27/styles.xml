@@ -8,8 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="fontFamily">@font/bmhanna_air_ttf</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@color/background_material_light</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:statusBarColor">@android:color/darker_gray</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
     </style>

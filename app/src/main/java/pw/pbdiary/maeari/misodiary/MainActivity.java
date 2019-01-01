@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     //액티비티 내에서 사용하는 항목 불러오기 위한 변수 지정 작업
     private TextView mTextMessage;
-    private BottomNavigationView mBottomNavigationView;
     private WebView mWebView;
     //파일 업로드를 위한 변수
     private static final String TYPE_IMAGE = "image/*";
@@ -205,7 +205,10 @@ public class MainActivity extends AppCompatActivity {
                 String accountID = url.replace("https://www.misodiary.net/home/main/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net")){
+            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 view.loadUrl(url);
             } else {
                 try {
@@ -223,19 +226,9 @@ public class MainActivity extends AppCompatActivity {
             view.loadUrl("javascript:document.getElementsByClassName('navbar')[0].remove()");
             SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);
             pullRefresh.setRefreshing(false);
-            if(url.equals("https://www.misodiary.net/home/dashboard")) {
-                CookieManager cM = CookieManager.getInstance();
-                SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
-                String cookieS = cM.getCookie("www.misodiary.net");
-                Log.d("COOKIE", cM.getCookie("www.misodiary.net"));
-                SharedPreferences.Editor editor = cookie.edit();
-                editor.putString("cookie",cookieS);
-                editor.apply();
-            } else {
-                CookieManager cM = CookieManager.getInstance();
-                SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
-                cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
-            }
+            CookieManager cM = CookieManager.getInstance();
+            SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
+            cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
         }
         @Override
         public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
@@ -301,6 +294,25 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
         startActivity(intent);
     }
+    public void onProfileClicked(View view) {
+        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+        mTextMessage.setText(getResources().getString(R.string.title_profile));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            BottomMenuFragment bmf = new BottomMenuFragment();
+            bmf.show(getSupportFragmentManager(),bmf.getTag());
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -339,7 +351,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         CookieManager cM = CookieManager.getInstance();
+        if(cookie.getString("cookie","") != null) {
+            cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
+        }
         super.onResume();
     }
 }

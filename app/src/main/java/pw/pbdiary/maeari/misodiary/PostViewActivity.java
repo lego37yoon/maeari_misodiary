@@ -189,7 +189,10 @@ public class PostViewActivity extends AppCompatActivity {
                 String accountID = url.replace("https://www.misodiary.net/home/main/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net")){
+            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 view.loadUrl(url);
             } else {
                 try {
