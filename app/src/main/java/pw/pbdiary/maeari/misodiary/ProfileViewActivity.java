@@ -1,7 +1,9 @@
 package pw.pbdiary.maeari.misodiary;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -194,8 +197,8 @@ public class ProfileViewActivity extends AppCompatActivity {
                 view.loadUrl(url);
             } else {
                 try {
-                    Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(bi);
+                    misoCustomTab c = new misoCustomTab();
+                    c.launch(ProfileViewActivity.this,url);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -207,6 +210,12 @@ public class ProfileViewActivity extends AppCompatActivity {
             view.loadUrl("javascript:document.getElementsByClassName('navbar')[0].remove()");
             SwipeRefreshLayout pullRefresh = findViewById(R.id.profileRefresher);
             pullRefresh.setRefreshing(false);
+            SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+            CookieManager cM = CookieManager.getInstance();
+            cM.setAcceptCookie(true);
+            if(cookie.getString("cookie","") != null) {
+                cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+            }
         }
         @Override
         public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {

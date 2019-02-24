@@ -14,7 +14,7 @@
     <string name="menu_description_appinfo">앱 정보</string>
     <string name="title_appinfo">메아리 for 미소일기는...</string>
     <string name="app_logo">앱 로고</string>
-    <string name="version_string">1.1 \"Brooklyn\"</string>
+    <string name="version_string"> \"Brooklyn\"</string>
     <string name="app_info_notice">이 앱은 오픈소스 소프트웨어를 사용하고 있습니다. 사용하는 소프트웨어의 라이선스에 대해서는 아래 링크를 참고해주세요.</string>
     <string name="app_info_notice2">이 앱에는 우아한 형제들이 배포한 배달의 민족 한나체 Air가 적용되었습니다.</string>
     <string name="string_osc">오픈소스 라이선스</string>
@@ -47,5 +47,24 @@
     <string name="error_continue">계속하기</string>
     <string name="error_cancel">취소</string>
     <string name="error_back">한 번 더 누르면 앱이 종료됩니다.</string>
-    <string name="login_title">로그인</string>
+    <string name="login_title">미소일기 로그인</string>
+    <string name="login_btn">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="misoid">아이디</string>
+    <string name="misopw">비밀번호</string>
+    <string name="misoautologin">자동 로그인</string>
+    <string name="misofindidpw">아이디 혹은 비밀번호 찾기</string>
+    <string name="misoRegister">회원가입</string>
+    <string name="loginprevious">이전 방식으로 로그인</string>
+    <string name="loginnew">새 방식으로 로그인</string>
+    <string name="loginIDlength">아이디는 3자 이상 16자 이하여야 합니다.</string>
+    <string name="loginPWlength">비밀번호는 8자 이상 18자 이하여야 합니다.</string>
+    <string name="loginfirstchar">아이디의 첫글자는 영문이어야 합니다.</string>
+    <string name="loginIDAllowchar">영문자, 숫자, _ 만 사용가능합니다.</string>
+    <string name="loginPWAllowchar">영문자, 숫자, !@#$%^&amp;*()만 사용가능합니다.</string>
+    <string name="loginNoAccount">계정 정보가 존재하지 않습니다.</string>
+    <string name="loginresetpw">비밀번호를 먼저 재설정해주세요.</string>
+    <string name="loginFailed">입력한 정보를 다시 확인해 주세요.</string>
+    <string name="error">오류</string>
+    <string name="value_missing">값의 일부가 존재하지 않습니다. 다시 확인해주세요.</string>
 </resources>

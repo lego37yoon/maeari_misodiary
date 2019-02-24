@@ -2,40 +2,50 @@ package pw.pbdiary.maeari.misodiary;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Message;
-import android.provider.MediaStore;
-import android.text.TextUtils;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toolbar;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
-import java.io.File;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
+    postLogin postLogin = pw.pbdiary.maeari.misodiary.postLogin.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +55,140 @@ public class LoginActivity extends AppCompatActivity {
         mWebView.loadUrl("https://www.misodiary.net/member/login");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
-
+        TextInputEditText mPWField = findViewById(R.id.misoPWField);
+        mPWField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        mPWField.setTransformationMethod(PasswordTransformationMethod.getInstance());
     }
+    public void onFindIDPWClicked(View view) {
+        misoCustomTab c = new misoCustomTab();
+        c.launch(LoginActivity.this,"https://www.misodiary.net/pages/id_lost");
+    }
+    public void onRegisterClicked(View view) {
+        misoCustomTab c = new misoCustomTab();
+        c.launch(LoginActivity.this,"https://www.misodiary.net/member/register");
+    }
+
+    public void onPreviousClicked(View view) {
+        TextInputLayout mIDLayout = findViewById(R.id.misoID);
+        TextInputLayout mPWLayout = findViewById(R.id.misoPW);
+        MaterialButton mLoginButton = findViewById(R.id.misoLogin);
+        Button mFindSome = findViewById(R.id.misoFindIDPW);
+        Button mRegisterButton = findViewById(R.id.misoRegister);
+        ConstraintLayout mToggle = findViewById(R.id.logintoggle);
+        WebView mWebView = findViewById(R.id.loginWebView);
+        Button mNewLogin = findViewById(R.id.misoNewLogin);
+        CheckBox mAutoLogin = findViewById(R.id.autologincb);
+        ConstraintLayout mPreviousLayout = findViewById(R.id.previousLayout);
+        mIDLayout.setVisibility(View.GONE);
+        mPWLayout.setVisibility(View.GONE);
+        mLoginButton.setVisibility(View.GONE);
+        mFindSome.setVisibility(View.GONE);
+        mRegisterButton.setVisibility(View.GONE);
+        mToggle.setVisibility(View.GONE);
+        mWebView.setVisibility(View.VISIBLE);
+        mNewLogin.setVisibility(View.VISIBLE);
+        mAutoLogin.setVisibility(View.GONE);
+        mPreviousLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void onNewLoginClicked(View view) {
+        TextInputLayout mIDLayout = findViewById(R.id.misoID);
+        TextInputLayout mPWLayout = findViewById(R.id.misoPW);
+        MaterialButton mLoginButton = findViewById(R.id.misoLogin);
+        Button mFindSome = findViewById(R.id.misoFindIDPW);
+        Button mRegisterButton = findViewById(R.id.misoRegister);
+        ConstraintLayout mToggle = findViewById(R.id.logintoggle);
+        WebView mWebView = findViewById(R.id.loginWebView);
+        Button mNewLogin = findViewById(R.id.misoNewLogin);
+        CheckBox mAutoLogin = findViewById(R.id.autologincb);
+        ConstraintLayout mPreviousLayout = findViewById(R.id.previousLayout);
+        mIDLayout.setVisibility(View.VISIBLE);
+        mPWLayout.setVisibility(View.VISIBLE);
+        mLoginButton.setVisibility(View.VISIBLE);
+        mFindSome.setVisibility(View.VISIBLE);
+        mRegisterButton.setVisibility(View.VISIBLE);
+        mToggle.setVisibility(View.VISIBLE);
+        mWebView.setVisibility(View.GONE);
+        mNewLogin.setVisibility(View.GONE);
+        mAutoLogin.setVisibility(View.GONE);
+        mPreviousLayout.setVisibility(View.GONE);
+    }
+
+    public void onSubmitClicked(View view) {
+        TextInputEditText mIDField = findViewById(R.id.misoIDField);
+        TextInputEditText mPWField = findViewById(R.id.misoPWField);
+        boolean canLogin = true;
+        if(Objects.requireNonNull(mIDField.getText()).length() < 2 || mIDField.getText().length() > 16) {
+            mIDField.setError(getResources().getText(R.string.loginIDlength));
+            canLogin = false;
+        }
+        if(Objects.requireNonNull(mPWField.getText()).length() < 8 || mPWField.getText().length() > 18) {
+            mPWField.setError(getResources().getText(R.string.loginPWlength));
+            canLogin = false;
+        }
+        String[] IDChars = mIDField.getText().toString().split(" ");
+        for (String ID : IDChars ) {
+            boolean isAllowedF = Pattern.matches("^[a-zA-Z]*$",ID);
+            /* if(!isAllowedF) {
+                mIDField.setError(getResources().getString(R.string.loginfirstchar));
+                canLogin = false;
+            } */
+            boolean isAllowedC = Pattern.matches("^[a-zA-Z0-9_]*$",ID);
+            if(!isAllowedC) {
+                mIDField.setError(getResources().getString(R.string.loginIDAllowchar));
+                canLogin = false;
+            }
+        }
+        String[] PWChars = mPWField.getText().toString().split("");
+        for (String PW : PWChars) {
+            boolean isAllowedC = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()]*$",PW);
+            if(!isAllowedC) {
+                mPWField.setError(getResources().getString(R.string.loginPWAllowchar));
+                canLogin = false;
+            }
+        }
+        if(canLogin) {
+            mWebView.loadUrl("javascript:(function() {document.loginForm.uid.value= \""+mIDField.getText()+"\"; document.loginForm.pwd.value = \""+mPWField.getText()+"\";}) ();");
+            //mWebView.loadUrl("javascript:(function() {document.getElementsByName('loginForm').method='post'; document.getElementsByName('loginForm').action='https://www.misodiary.net/api_member/auth_token';})();");
+            //mWebView.loadUrl("javascript:(function() {var requestURL ='' ; document.loginForm.submit();}) ();");
+            String ua = mWebView.getSettings().getUserAgentString();
+            JSONObject jObject = new JSONObject();
+            try {
+                jObject.put("uid",mIDField.getText());
+                jObject.put("pwd",mPWField.getText());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.value_missing),Toast.LENGTH_LONG).show();
+            }
+
+            postLogin(jObject.toString(),loginCookieBack,ua);
+            //first this is logindata, second one is callback method.
+        }
+    }
+
+    private void postLogin(String logindata, Callback loginCookieBack, String ua) {
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"),logindata);
+        Request request = new Request.Builder().url("https://www.misodiary.net/api_member/auth_token")
+                .post(body)
+                .header("User-Agent",ua)
+                .header("Origin","https://www.misodiary.net")
+                .build();
+        client.newCall(request).enqueue(loginCookieBack);
+    }
+
+    private Callback loginCookieBack = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error),Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            final String resData = response.body().string();
+            Log.d("TEST",resData);
+        }
+    };
 
     public class loginweb extends WebViewClient {
         @Override
@@ -97,10 +239,15 @@ public class LoginActivity extends AppCompatActivity {
             if (!url.startsWith("https://www.misodiary.net/member")) {
                 CookieManager cM = CookieManager.getInstance();
                 SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
-                String cookieS = cM.getCookie("www.misodiary.net");
-                Log.d("COOKIE", cM.getCookie("www.misodiary.net"));
+                String cookieEn = cM.getCookie("www.misodiary.net");
+                /* try {
+                    cookieEn = URLDecoder.decode(cookieEn,"utf-8") + "; Expires=Fri, 31 Dec 2100 09:00:00 KST";
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } */
+                //Log.d("COOKIE", cM.getCookie("www.misodiary.net"));
                 SharedPreferences.Editor editor = cookie.edit();
-                editor.putString("cookie",cookieS);
+                editor.putString("cookie",cookieEn);
                 editor.apply();
             }
             if (url.startsWith("https://www.misodiary.net/main")) {
@@ -151,8 +298,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } else {
                 try {
-                    Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(bi);
+                    misoCustomTab c = new misoCustomTab();
+                    c.launch(LoginActivity.this,url);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }

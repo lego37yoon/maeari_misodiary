@@ -13,7 +13,7 @@
     <string name="menu_description_appinfo">About this app</string>
     <string name="title_appinfo">About</string>
     <string name="app_logo">App Logo</string>
-    <string name="version_string">\"Brooklyn\"</string>
+    <string name="version_string"> \"Brooklyn\"</string>
     <string name="app_info_notice">This Application uses open-source software. You can see license informations from below link.</string>
     <string name="app_info_notice2">This Application uses HANNA Air fonts published by Wooahhan Brothers.</string>
     <string name="string_osc">OPEN SOURCE LICENSE</string>
@@ -46,5 +46,24 @@
     <string name="error_continue">Continue</string>
     <string name="error_cancel">Cancel</string>
     <string name="error_back">Press Back Button Once Again to exit App.</string>
-    <string name="login_title">Login</string>
+    <string name="login_title">Login to misodiary</string>
+    <string name="login_btn">Login</string>
+    <string name="logout">Logout</string>
+    <string name="misoid">ID</string>
+    <string name="misopw">Password</string>
+    <string name="misoautologin">Auto Login</string>
+    <string name="misofindidpw">I forgot my password or ID.</string>
+    <string name="misoRegister">Register</string>
+    <string name="loginprevious">Login as WebView(OLD)</string>
+    <string name="loginnew">Try new Login screen</string>
+    <string name="loginIDlength">You must type 3 to 16 characters in this field.</string>
+    <string name="loginPWlength">You must type 8 to 18 characters in this field.</string>
+    <string name="loginfirstchar">You must use alphabet in the first letter.</string>
+    <string name="loginIDAllowchar">You can use alphabet, number, _ in this field.</string>
+    <string name="loginPWAllowchar">You can use alphabet, number, !@#$%^&amp;*() in this field.</string>
+    <string name="loginNoAccount">Account is not existed.</string>
+    <string name="loginresetpw">Reset your password first.</string>
+    <string name="loginFailed">Please check what you typed.</string>
+    <string name="error">Error</string>
+    <string name="value_missing">Some values are missing. Please check again.</string>
 </resources>

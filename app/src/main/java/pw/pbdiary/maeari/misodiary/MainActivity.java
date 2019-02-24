@@ -1,11 +1,14 @@
 package pw.pbdiary.maeari.misodiary;
 
+import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
@@ -13,10 +16,14 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.SslErrorHandler;
@@ -29,7 +36,9 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,13 +50,15 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnKeyboardVisibilityListener{
 
     //액티비티 내에서 사용하는 항목 불러오기 위한 변수 지정 작업
-    private TextView mTextMessage;
-    private WebView mWebView;
+    public TextView mTextMessage;
+    public WebView mWebView;
     //파일 업로드를 위한 변수
     private static final String TYPE_IMAGE = "image/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
@@ -64,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomAppBar mAppBar = findViewById(R.id.navigation);
+        setSupportActionBar(mAppBar);
         //pressedTime = System.currentTimeMillis();
         SharedPreferences sp = getSharedPreferences(saveFirst, Context.MODE_PRIVATE);
         if (!sp.getBoolean("first",false)) {
@@ -73,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PermissionCheckInfo.class);
             startActivity(intent);
         }
-        SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         mTextMessage = (TextView) findViewById(R.id.title_main);
         mWebView = (WebView) findViewById(R.id.webView);
         mWebView.setWebViewClient(new misoWeb());
+        SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         CookieManager cM = CookieManager.getInstance();
-        cM.setAcceptCookie(true);
         if(cookie.getString("cookie","") != null) {
-            cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
+            Log.d("COOKIE",cookie.getString("cookie",""));
+            cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
         }
         //웹 뷰 설정
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -175,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "profile":
                     mTextMessage.setText(R.string.title_profile);
+                    //mWebView.loadUrl("https://www.misodiary.net/main/opench");
                     mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
                     break;
             }
@@ -190,39 +204,95 @@ public class MainActivity extends AppCompatActivity {
                 mWebView.reload();
             }
         });
+
+        //키보드 올라올 때 앱 바 가리기
+        setKeyboardVisibilityListener(this);
+    }
+
+    private void setKeyboardVisibilityListener(final OnKeyboardVisibilityListener onKeyboardVisibilityListener) {
+        final View parentView = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
+        parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            private boolean alreadyOpen;
+            private final int defaultKeyboardHeightDP = 100;
+            private final int EstimatedKeyboardDP = defaultKeyboardHeightDP + (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 48 : 0);
+            private final Rect rect = new Rect();
+
+            @Override
+            public void onGlobalLayout() {
+                int estimatedKeyboardHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, EstimatedKeyboardDP, parentView.getResources().getDisplayMetrics());
+                parentView.getWindowVisibleDisplayFrame(rect);
+                int heightDiff = parentView.getRootView().getHeight() - (rect.bottom - rect.top);
+                boolean isShown = heightDiff >= estimatedKeyboardHeight;
+
+                if (isShown == alreadyOpen) {
+                    Log.i("Keyboard state", "Ignoring global layout change...");
+                    return;
+                }
+                alreadyOpen = isShown;
+                onKeyboardVisibilityListener.onVisibilityChanged(isShown);
+            }
+        });
+    }
+
+    @Override
+    public void onVisibilityChanged(boolean visible) {
+        BottomAppBar bab = findViewById(R.id.navigation);
+        FloatingActionButton fab = findViewById(R.id.newArticle);
+        if(visible) {
+            bab.setVisibility(View.GONE);
+            fab.hide();
+        } else {
+            bab.setVisibility(View.VISIBLE);
+            fab.show();
+        }
     }
 
     public class misoWeb extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if(url.startsWith("https://www.misodiary.net/main/opench")) {
-                mTextMessage.setText(R.string.title_opench);
-                view.loadUrl(url);
-            } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
-                mTextMessage.setText(R.string.title_michinrandom);
-                view.loadUrl(url);
-            } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                mTextMessage.setText(R.string.title_profile);
-                view.loadUrl(url);
-            } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+            if(url.startsWith("https://www.misodiary.net/member/notification")) {
+                view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+                view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
                 String keyword = url.replace("https://www.misodiary.net/post/search/","");
                 intent.putExtra("keyword",keyword);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+                view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
                 String postNumber = url.replace("https://www.misodiary.net/post/single/","");
                 intent.putExtra("postNumber",postNumber);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+                view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
                 String accountID = url.replace("https://www.misodiary.net/home/main/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
+            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+                view.setVisibility(View.INVISIBLE);
+            } else if(url.startsWith("https://www.misodiary.net")) {
+                view.loadUrl(url);
+            } else {
+                misoCustomTab c = new misoCustomTab();
+                c.launch(MainActivity.this,url);
+            }
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            if(url.startsWith("https://www.misodiary.net/main/opench")) {
+                mTextMessage.setText(R.string.title_opench);
+            } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+                mTextMessage.setText(R.string.title_michinrandom);
+            } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+                mTextMessage.setText(R.string.title_profile);
             } else if(url.startsWith("https://www.misodiary.net/member/login")) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
@@ -230,26 +300,16 @@ public class MainActivity extends AppCompatActivity {
                 if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
                     mTextMessage.setText(R.string.title_opench);
                 }
-                view.loadUrl(url);
-            } else {
-                try {
-                    Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(bi);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
             view.loadUrl("javascript:document.getElementsByClassName('navbar')[0].remove()");
             SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);
             pullRefresh.setRefreshing(false);
-            CookieManager cM = CookieManager.getInstance();
             SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
-            cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
+            CookieManager cM = CookieManager.getInstance();
+            cM.setAcceptCookie(true);
+            if(cookie.getString("cookie","") != null) {
+                cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+            }
         }
         @Override
         public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
@@ -317,13 +377,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onProfileClicked(View view) {
         mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
-        mTextMessage.setText(getResources().getString(R.string.title_profile));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation,menu);
-        return true;
     }
 
     @Override
@@ -372,14 +425,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        mWebView = findViewById(R.id.webView);
+        mWebView.setVisibility(View.VISIBLE);
         SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         CookieManager cM = CookieManager.getInstance();
         if(cookie.getString("cookie","") != null) {
-            cM.setCookie("www.misodiary.net",cookie.getString("cookie","")+"; Expires=Fri, 31 Dec 2100 00:00:00 KST;");
+            cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
         }
         super.onResume();
     }
 
+    //뒤로가기 누를때
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mTextMessage = findViewById(R.id.title_main);

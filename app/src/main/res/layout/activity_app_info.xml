@@ -27,7 +27,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/bmjua_ttf"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textSize="25sp"
@@ -42,7 +41,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/bmjua_ttf"
         android:text="@string/version_string"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/codename" />
 
     <TextView
         android:id="@+id/textView3"
@@ -69,7 +67,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/bmjua_ttf"
         android:text="@string/app_info_notice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +77,6 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bmjua_ttf"
         android:onClick="onOSLClicked"
         android:text="@string/string_osc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +88,6 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bmjua_ttf"
         android:onClick="onMaeariClicked"
         android:text="@string/string_maeari"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +99,6 @@
         style="@android:style/Widget.Material.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bmjua_ttf"
         android:onClick="onMisoClicked"
         android:text="@string/string_misod"
         app:layout_constraintEnd_toEndOf="parent"

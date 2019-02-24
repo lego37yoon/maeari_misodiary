@@ -14,10 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SettingsActivity"></activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/searchTheme"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/AppTheme.login">
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />
@@ -32,13 +33,45 @@
         </activity>
         <activity
             android:name=".PostViewActivity"
-            android:exported="false"
+            android:theme="@style/anotherTheme2"
             android:label="@string/title_single_post">
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.misodiary.net"
+                    android:pathPattern="/post/single" />
+            </intent-filter>
+            -->
         </activity>
-        <activity android:name=".ProfileViewActivity" />
+        <activity
+            android:name=".ProfileViewActivity"
+            android:theme="@style/anotherTheme2">
+            <meta-data
+                android:name="android.webkit.WebView.EnableSafeBrowsing"
+                android:value="true" />
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.misodiary.net"
+                    android:pathPattern="/home/main" />
+            </intent-filter>
+            -->
+        </activity>
         <activity
             android:name=".MyAccountActivity"
             android:exported="false"
@@ -85,6 +118,12 @@
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_APP_INFO" />
+
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
