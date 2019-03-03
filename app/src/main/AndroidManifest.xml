@@ -14,9 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AgreementActivity"></activity>
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/anotherTheme2"></activity>
+            android:theme="@style/anotherTheme2" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
@@ -35,8 +36,8 @@
         </activity>
         <activity
             android:name=".PostViewActivity"
-            android:theme="@style/anotherTheme2"
-            android:label="@string/title_single_post">
+            android:label="@string/title_single_post"
+            android:theme="@style/anotherTheme2">
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -28,8 +29,13 @@ public class PermissionCheckInfo extends AppCompatActivity {
     }
 
     public void onStartMainClicked(View v) {
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(i);
+        CheckBox cb = findViewById(R.id.checkBox);
+        if(cb.isChecked()) {
+            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(i);
+        } else {
+            Toast.makeText(getApplicationContext(),"CHECK FIRST",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onRequestPermissions(View v){

@@ -134,45 +134,76 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rPCameraDesc" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/bottomButtons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+        <CheckBox
+            android:id="@+id/checkBox"
+            style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/agree_content_1"
+            app:layout_constraintBottom_toTopOf="@+id/agreements"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/startMain"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
+        <Button
+            android:id="@+id/agreements"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/agree_content_2"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomButtons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/bottomButtons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/fullscreen_content_controls"
+                style="?metaButtonBarStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onStartMainClicked"
-                android:text="@string/start_button"
-                android:textColor="#FFFFFF" />
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent">
 
-            <Button
-                android:id="@+id/requestPermissionBtn"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onRequestPermissions"
-                android:text="@string/requestPermission"
-                android:textColor="#FFFFFF" />
+                <Button
+                    android:id="@+id/startMain"
+                    style="?metaButtonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onStartMainClicked"
+                    android:text="@string/start_button"
+                    android:textColor="#FFFFFF" />
 
-        </LinearLayout>
-    </FrameLayout>
+                <Button
+                    android:id="@+id/requestPermissionBtn"
+                    style="?metaButtonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onRequestPermissions"
+                    android:text="@string/requestPermission"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

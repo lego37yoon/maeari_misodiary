@@ -67,4 +67,6 @@
     <string name="error">Error</string>
     <string name="value_missing">Some values are missing. Please check again.</string>
     <string name="btn_write">Post Something</string>
+    <string name="agree_content_1">I agree to maeari for misodiary privacy policy, misodiary terms of service and privacy policy to use this app.</string>
+    <string name="agree_content_2">Privacy Policy and Terms of Service</string>
 </resources>

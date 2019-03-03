@@ -68,4 +68,6 @@
     <string name="error">오류</string>
     <string name="value_missing">값의 일부가 존재하지 않습니다. 다시 확인해주세요.</string>
     <string name="btn_write">글 작성하러 가기</string>
+    <string name="agree_content_1">메아리 for 미소일기 개인정보 보호정책, 미소일기 이용약관 및 개인정보 취급방침에 동의합니다.</string>
+    <string name="agree_content_2">개인정보 보호정책 및 서비스 이용약관</string>
 </resources>
