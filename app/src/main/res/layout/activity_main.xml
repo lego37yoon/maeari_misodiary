@@ -105,7 +105,8 @@
             android:src="@drawable/ic_edit_white_24dp"
             android:onClick="onProfileClicked"
             app:layout_anchor="@id/navigation"
-            app:fabSize="normal"/>
+            app:fabSize="normal"
+            android:contentDescription="@string/btn_write"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
