@@ -69,4 +69,5 @@
     <string name="btn_write">Post Something</string>
     <string name="agree_content_1">I agree to maeari for misodiary privacy policy, misodiary terms of service and privacy policy to use this app.</string>
     <string name="agree_content_2">Privacy Policy and Terms of Service</string>
+    <string name="check_agree">Please Agree to Privacy Policy by maeari for misodiary.</string>
 </resources>

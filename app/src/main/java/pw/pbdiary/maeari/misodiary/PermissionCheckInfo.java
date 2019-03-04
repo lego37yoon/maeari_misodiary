@@ -34,12 +34,17 @@ public class PermissionCheckInfo extends AppCompatActivity {
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
         } else {
-            Toast.makeText(getApplicationContext(),"CHECK FIRST",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.check_agree),Toast.LENGTH_LONG).show();
         }
     }
 
     public void onRequestPermissions(View v){
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},ALL_PERMISSION_GRANTED);
+        CheckBox cb = findViewById(R.id.checkBox);
+        if(cb.isChecked()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},ALL_PERMISSION_GRANTED);
+        } else {
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.check_agree),Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
