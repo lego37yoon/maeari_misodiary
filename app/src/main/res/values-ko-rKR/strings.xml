@@ -71,4 +71,7 @@
     <string name="agree_content_1">메아리 for 미소일기 개인정보 보호정책, 미소일기 이용약관 및 개인정보 취급방침에 동의합니다.</string>
     <string name="agree_content_2">개인정보 보호정책 및 서비스 이용약관</string>
     <string name="check_agree">메아리 for 미소일기의 개인정보 취급방침을 먼저 동의해주세요.</string>
+    <string name="mfm_pp">메아리 for 미소일기 개인정보 취급방침</string>
+    <string name="ms_pp">미소일기 개인정보 취급방침</string>
+    <string name="ms_tos">미소일기 이용약관</string>
 </resources>
