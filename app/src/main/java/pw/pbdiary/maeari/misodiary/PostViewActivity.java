@@ -185,8 +185,7 @@ public class PostViewActivity extends AppCompatActivity {
                 intent.putExtra("keyword", keyword);
                 startActivity(intent);
             } else if (url.startsWith("https://www.misodiary.net/post/single")) {
-                String postNumber = url.replace("https://www.misodiary/net/post/search/","");
-                mWebView.loadUrl("https://www.misodiary.net/post/single/"+postNumber);
+                mWebView.loadUrl(url);
             } else if(url.startsWith("https://www.misodiary.net/home/main")) {
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
                 String accountID = url.replace("https://www.misodiary.net/home/main/","");

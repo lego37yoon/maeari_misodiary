@@ -16,13 +16,17 @@ public class AppInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app_info);
         TextView mTextView = findViewById(R.id.buildinfo);
         TextView mTextView2 = findViewById(R.id.codename);
-        mTextView2.setText(BuildConfig.VERSION_NAME+getResources().getString(R.string.version_string));
-        mTextView.setText(getResources().getString(R.string.app_name)+"\n"+BuildConfig.VERSION_NAME+getResources().getString(R.string.version_string)+"\n BUILD: "+BuildConfig.VERSION_CODE+" MODE: "+BuildConfig.BUILD_TYPE);
+        mTextView2.setText(getResources().getString(R.string.ver_vcode,BuildConfig.VERSION_NAME,getResources().getString(R.string.version_string)));
+        mTextView.setText(getResources().getString(R.string.debug_info,getResources().getString(R.string.app_name),BuildConfig.VERSION_NAME,getResources().getString(R.string.version_string),BuildConfig.VERSION_CODE,BuildConfig.BUILD_TYPE));
     }
 
     public void onOSLClicked(View v) {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://latios.pbdiary.pw/maeari/misodiary/license.html"));
-        startActivity(i);
+        try {
+            misoCustomTab c = new misoCustomTab();
+            c.launch(AppInfoActivity.this,"https://latios.pbdiary.pw/maeari/misodiary/license.html");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void onMaeariClicked(View v) {
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://latios.pbdiary.pw/maeari"));

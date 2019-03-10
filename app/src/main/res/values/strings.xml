@@ -73,4 +73,6 @@
     <string name="mfm_pp">maeari for misodiary Privacy Policy</string>
     <string name="ms_pp">misodiary Privacy Policy</string>
     <string name="ms_tos">misodiary Terms of Service</string>
+    <string name="ver_vcode" translatable="false">%1$s %2$s</string>
+    <string name="debug_info" translatable="false">%1$s \n %2$s %3$s \n BUILD: %4$d MODE: %5$s</string>
 </resources>

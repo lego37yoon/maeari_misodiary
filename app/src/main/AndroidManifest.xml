@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:resizeableActivity="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AgreementActivity"></activity>
+        <activity android:name=".AgreementActivity"
+            android:theme="@style/AppTheme.Material"></activity>
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/anotherTheme2" />
