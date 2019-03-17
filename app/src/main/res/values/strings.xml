@@ -22,7 +22,7 @@
     <string name="error1">Failed to create an image.</string>
     <string name="title_noti">Notifications</string>
     <string name="title_single_post">Post</string>
-    <string name="title_my_account">Settings</string>
+    <string name="title_my_account">My Account</string>
     <string name="back">Back</string>
     <string name="search_hint">Search in Misodiary</string>
     <string name="requestPermission">Request Permissions</string>
@@ -75,4 +75,8 @@
     <string name="ms_tos">misodiary Terms of Service</string>
     <string name="ver_vcode" translatable="false">%1$s %2$s</string>
     <string name="debug_info" translatable="false">%1$s \n %2$s %3$s \n BUILD: %4$d MODE: %5$s</string>
+    <string name="setting_account">Account Settings</string>
+    <string name="setting_mainsc">Home Screen</string>
+    <string name="setting_appsetting">App Settings</string>
+    <string name="title_help">Help</string>
 </resources>

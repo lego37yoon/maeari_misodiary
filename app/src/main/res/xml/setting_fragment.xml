@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-</PreferenceScreen>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/setting_account">
+        <Preference
+            android:title="@string/title_my_account">
+            <intent android:targetClass="MyAccountActivity.class" />
+        </Preference>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="autologin"
+            android:enabled="false"
+            android:title="@string/misoautologin" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_appsetting">
+        <ListPreference
+            android:entries="@array/array_prefersc"
+            android:entryValues="@array/array_prefsc"
+            android:defaultValue="opench"
+            android:title="@string/setting_mainsc" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_help">
+        <Preference android:title="@string/title_appinfo">
+            <intent android:targetClass="AppInfoActivity.class" />
+        </Preference>
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

@@ -5,4 +5,9 @@
         <item>@string/title_michinrandom</item>
         <item>@string/title_profile</item>
     </string-array>
+    <string-array name="array_prefsc">
+        <item>opench</item>
+        <item>michinrandom</item>
+        <item>profile</item>
+    </string-array>
 </resources>

@@ -20,18 +20,21 @@
             android:orientation="horizontal">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/mfmpp"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mfm_pp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/mtos"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ms_tos" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/mpp"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
