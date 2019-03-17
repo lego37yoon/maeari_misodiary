@@ -3,19 +3,11 @@ package pw.pbdiary.maeari.misodiary;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.InputType;
@@ -39,7 +31,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -164,42 +155,10 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),getResources().getString(R.string.value_missing),Toast.LENGTH_LONG).show();
             }
 
-            postLogin(jObject.toString(),loginCookieBack,ua,fieldlength,prevCookie);
+            //Jsoup Login System will be constructed in this area.
             //first this is logindata, second one is callback method.
         }
     }
-
-    private void postLogin(String logindata, Callback loginCookieBack, String ua,int fieldlength,String prevCookie) {
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"),logindata);
-        Request request = new Request.Builder().url("https://www.misodiary.net/api_member/auth_token")
-                .post(body)
-                .header("Origin","https://www.misodiary.net")
-                .header("User-Agent",ua)
-                .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
-                .header("Accept","*/*")
-                .header("X-Requsted-With","XMLHttpRequest")
-                .header("Content-Length", String.valueOf(fieldlength))
-                .header("DNT",String.valueOf(1))
-                .header("Sec-Metadata","destination=empty, site=same-origin")
-                .build();
-        client.newCall(request).enqueue(loginCookieBack);
-        Log.d("INFO",ua);
-        Log.d("INFO",String.valueOf(fieldlength));
-    }
-
-    private Callback loginCookieBack = new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error),Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            final String resData = response.body().string();
-            Log.d("TEST",resData);
-        }
-    };
 
     public class loginweb extends WebViewClient {
         @Override
