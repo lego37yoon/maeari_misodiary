@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_prefersc">
+        <item>@string/title_home</item>
+        <item>@string/title_michinrandom</item>
+        <item>@string/title_profile</item>
+    </string-array>
+</resources>

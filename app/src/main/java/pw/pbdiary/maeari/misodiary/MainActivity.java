@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         startActivity(intent);
     }
     public void onMyAccountClicked(View v) {
-        Intent intent = new Intent(getApplicationContext(), MyAccountActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
     }
     public void onProfileClicked(View view) {

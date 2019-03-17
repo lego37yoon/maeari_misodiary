@@ -94,9 +94,9 @@
         android:layout_gravity="end"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         android:text="@string/misoautologin"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="gone" />
+        android:textColor="@android:color/darker_gray" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/misoLogin"
@@ -106,10 +106,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorPrimary"
+        android:visibility="gone"
         android:text="@string/login_btn"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
         android:textSize="16sp"
-        android:visibility="gone"
         android:onClick="onSubmitClicked"
         app:cornerRadius="8dp" />
 
@@ -120,11 +120,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         android:onClick="onFindIDPWClicked"
         android:text="@string/misofindidpw"
         android:textAlignment="textEnd"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="gone" />
+        android:textColor="@android:color/darker_gray" />
 
     <Button
         android:id="@+id/misoRegister"
@@ -134,10 +134,10 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:onClick="onRegisterClicked"
+        android:visibility="gone"
         android:text="@string/misoRegister"
         android:textAlignment="textEnd"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="gone" />
+        android:textColor="@android:color/darker_gray" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logintoggle"

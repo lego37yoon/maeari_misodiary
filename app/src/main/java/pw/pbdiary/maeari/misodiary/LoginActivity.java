@@ -45,7 +45,6 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
-    postLogin postLogin = pw.pbdiary.maeari.misodiary.postLogin.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,30 +150,42 @@ public class LoginActivity extends AppCompatActivity {
             mWebView.loadUrl("javascript:(function() {document.loginForm.uid.value= \""+mIDField.getText()+"\"; document.loginForm.pwd.value = \""+mPWField.getText()+"\";}) ();");
             //mWebView.loadUrl("javascript:(function() {document.getElementsByName('loginForm').method='post'; document.getElementsByName('loginForm').action='https://www.misodiary.net/api_member/auth_token';})();");
             //mWebView.loadUrl("javascript:(function() {var requestURL ='' ; document.loginForm.submit();}) ();");
+            CookieManager cM = CookieManager.getInstance();
+            String prevCookie = cM.getCookie("www.misodiary.net");
             String ua = mWebView.getSettings().getUserAgentString();
+            int fieldlength = 9;
             JSONObject jObject = new JSONObject();
             try {
                 jObject.put("uid",mIDField.getText());
                 jObject.put("pwd",mPWField.getText());
+                fieldlength += mIDField.getText().length()+mPWField.getText().length();
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(),getResources().getString(R.string.value_missing),Toast.LENGTH_LONG).show();
             }
 
-            postLogin(jObject.toString(),loginCookieBack,ua);
+            postLogin(jObject.toString(),loginCookieBack,ua,fieldlength,prevCookie);
             //first this is logindata, second one is callback method.
         }
     }
 
-    private void postLogin(String logindata, Callback loginCookieBack, String ua) {
+    private void postLogin(String logindata, Callback loginCookieBack, String ua,int fieldlength,String prevCookie) {
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(MediaType.get("application/json; charset=utf-8"),logindata);
         Request request = new Request.Builder().url("https://www.misodiary.net/api_member/auth_token")
                 .post(body)
-                .header("User-Agent",ua)
                 .header("Origin","https://www.misodiary.net")
+                .header("User-Agent",ua)
+                .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
+                .header("Accept","*/*")
+                .header("X-Requsted-With","XMLHttpRequest")
+                .header("Content-Length", String.valueOf(fieldlength))
+                .header("DNT",String.valueOf(1))
+                .header("Sec-Metadata","destination=empty, site=same-origin")
                 .build();
         client.newCall(request).enqueue(loginCookieBack);
+        Log.d("INFO",ua);
+        Log.d("INFO",String.valueOf(fieldlength));
     }
 
     private Callback loginCookieBack = new Callback() {
