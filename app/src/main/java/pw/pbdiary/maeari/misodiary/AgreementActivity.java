@@ -33,14 +33,14 @@ public class AgreementActivity extends AppCompatActivity {
             }
         });
         Chip mtosppchip = (Chip) findViewById(R.id.mtos);
-        mfmppchip.setOnClickListener(new View.OnClickListener() {
+        mtosppchip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PageTaskToS(AgreementActivity.this).execute();
             }
         });
         Chip mppchip = (Chip) findViewById(R.id.mpp);
-        mfmppchip.setOnClickListener(new View.OnClickListener() {
+        mppchip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PageTaskPP(AgreementActivity.this).execute();
