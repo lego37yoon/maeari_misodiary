@@ -16,7 +16,7 @@
         android:resizeableActivity="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AgreementActivity"
-            android:theme="@style/AppTheme.Material"></activity>
+            android:theme="@style/AppTheme.Material" />
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/anotherTheme2" />
@@ -84,7 +84,7 @@
             android:theme="@style/anotherTheme2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".SettingsActivity" />
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />
@@ -119,7 +119,7 @@
             android:theme="@style/anotherTheme2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".SettingsActivity" />
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />

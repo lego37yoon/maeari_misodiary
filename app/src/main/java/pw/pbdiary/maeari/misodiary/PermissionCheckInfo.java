@@ -8,7 +8,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -33,6 +35,10 @@ public class PermissionCheckInfo extends AppCompatActivity {
         if(cb.isChecked()) {
             Intent i = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(i);
+            SharedPreferences sp = getSharedPreferences("saveFirst", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("first",true);
+            editor.apply();
         } else {
             Toast.makeText(getApplicationContext(),getResources().getString(R.string.check_agree),Toast.LENGTH_LONG).show();
         }
@@ -42,9 +48,18 @@ public class PermissionCheckInfo extends AppCompatActivity {
         CheckBox cb = findViewById(R.id.checkBox);
         if(cb.isChecked()) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},ALL_PERMISSION_GRANTED);
+            SharedPreferences sp = getSharedPreferences("saveFirst", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("first",true);
+            editor.apply();
         } else {
             Toast.makeText(getApplicationContext(),getResources().getString(R.string.check_agree),Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void onTOSClicked(View v) {
+        Intent i = new Intent(getApplicationContext(),AgreementActivity.class);
+        startActivity(i);
     }
 
     @Override
@@ -53,5 +68,10 @@ public class PermissionCheckInfo extends AppCompatActivity {
         if(grantResults.length >0) {
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
     }
 }

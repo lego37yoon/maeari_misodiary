@@ -71,10 +71,6 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
                         break;
-                    case R.id.nav_appinfo:
-                        Intent i = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(),AppInfoActivity.class);
-                        getActivity().startActivity(i);
-                        break;
                 }
                 return true;
             }

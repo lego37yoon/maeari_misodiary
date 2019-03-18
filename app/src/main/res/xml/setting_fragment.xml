@@ -3,9 +3,11 @@
     <PreferenceCategory android:title="@string/setting_account">
         <Preference
             android:title="@string/title_my_account">
-            <intent android:targetClass="MyAccountActivity.class" />
+            <intent
+                android:targetPackage="pw.pbdiary.maeari.misodiary"
+                android:targetClass="pw.pbdiary.maeari.misodiary.MyAccountActivity" />
         </Preference>
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="autologin"
             android:enabled="false"
@@ -13,6 +15,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_appsetting">
         <ListPreference
+            android:key="screendefault"
             android:entries="@array/array_prefersc"
             android:entryValues="@array/array_prefsc"
             android:defaultValue="opench"
@@ -20,7 +23,9 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_help">
         <Preference android:title="@string/title_appinfo">
-            <intent android:targetClass="AppInfoActivity.class" />
+            <intent
+                android:targetPackage="pw.pbdiary.maeari.misodiary"
+                android:targetClass="pw.pbdiary.maeari.misodiary.AppInfoActivity" />
         </Preference>
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

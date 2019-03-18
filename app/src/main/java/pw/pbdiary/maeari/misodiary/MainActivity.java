@@ -52,6 +52,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends AppCompatActivity implements OnKeyboardVisibilityListener{
@@ -188,12 +189,29 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     break;
                 case "profile":
                     mTextMessage.setText(R.string.title_profile);
-                    //mWebView.loadUrl("https://www.misodiary.net/main/opench");
                     mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
                     break;
             }
         } else {
-            mWebView.loadUrl("https://www.misodiary.net");
+            SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
+            switch (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench"))){
+                case "opench":
+                    mTextMessage.setText(R.string.title_opench);
+                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    break;
+                case "michinrandom":
+                    mTextMessage.setText(R.string.title_michinrandom);
+                    mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                    break;
+                case "profile":
+                    mTextMessage.setText(R.string.title_profile);
+                    mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                    break;
+                default:
+                    mTextMessage.setText(R.string.title_opench);
+                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    break;
+            }
         }
 
         SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);

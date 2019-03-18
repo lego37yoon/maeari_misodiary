@@ -2,14 +2,12 @@ package pw.pbdiary.maeari.misodiary;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.preference.PreferenceFragmentCompat;
 
-import androidx.preference.PreferenceFragment;
-
-public class SettingFragment extends PreferenceFragment {
-    SharedPreferences prefs;
+public class SettingFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-
+        setPreferencesFromResource(R.xml.setting_fragment, rootKey);
     }
 }

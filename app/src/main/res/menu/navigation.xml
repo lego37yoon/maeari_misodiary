@@ -25,10 +25,5 @@
         android:icon="@drawable/ic_logout_black_24px"
         android:fontFamily="@font/bmhanna_air_ttf"
         android:title="@string/logout" />
-    <item
-        android:id="@+id/nav_appinfo"
-        android:icon="@drawable/ic_info_outline_black_24dp"
-        android:fontFamily="@font/bmhanna_air_ttf"
-        android:title="@string/title_appinfo" />
 
 </menu>
