@@ -47,6 +47,11 @@ public class AgreementActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onagreeBackClicked(View view) {
+        finish();
+    }
+
     private static class PageTaskToS extends AsyncTask<Void,Void,String> {
         private Elements elementone;
         private WeakReference<AgreementActivity> activityReference;
