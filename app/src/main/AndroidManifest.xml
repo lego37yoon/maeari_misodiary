@@ -19,7 +19,12 @@
             android:theme="@style/AppTheme.Material" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/anotherTheme2" />
+            android:label="@string/setting_appsetting"
+            android:theme="@style/anotherTheme2">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="false"
