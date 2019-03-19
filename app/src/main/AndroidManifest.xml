@@ -20,7 +20,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/setting_appsetting"
-            android:theme="@style/anotherTheme2">
+            android:theme="@style/anotherTheme3">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -86,7 +86,7 @@
             android:name=".MyAccountActivity"
             android:exported="false"
             android:label="@string/title_my_account"
-            android:theme="@style/anotherTheme2">
+            android:theme="@style/anotherTheme3">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
@@ -121,14 +121,10 @@
         <activity
             android:name=".AppInfoActivity"
             android:label="@string/title_appinfo"
-            android:theme="@style/anotherTheme2">
+            android:theme="@style/anotherTheme3">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
-            <meta-data
-                android:name="android.webkit.WebView.EnableSafeBrowsing"
-                android:value="true" />
-
             <intent-filter>
                 <action android:name="android.intent.action.SHOW_APP_INFO" />
 
