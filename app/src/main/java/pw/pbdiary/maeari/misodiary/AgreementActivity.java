@@ -23,26 +23,44 @@ public class AgreementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
-        Chip mfmppchip = (Chip) findViewById(R.id.mfmpp);
-        mfmppchip.setChecked(true);
+        final Chip mfmppchip = (Chip) findViewById(R.id.mfmpp);
+        final Chip mtosppchip = (Chip) findViewById(R.id.mtos);
+        final Chip mppchip = (Chip) findViewById(R.id.mpp);
+        mfmppchip.setCheckable(false);
+        mfmppchip.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mfmppchip.setTextAppearance(R.style.ThemeOverlay_AppTheme_ActionBar);
         new PageTaskMPP(AgreementActivity.this).execute();
         mfmppchip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mtosppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mtosppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
+                mppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
                 new PageTaskMPP(AgreementActivity.this).execute();
             }
         });
-        Chip mtosppchip = (Chip) findViewById(R.id.mtos);
         mtosppchip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mtosppchip.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                mtosppchip.setTextAppearance(R.style.ThemeOverlay_AppTheme_ActionBar);
+                mfmppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mfmppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
+                mppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
                 new PageTaskToS(AgreementActivity.this).execute();
             }
         });
-        Chip mppchip = (Chip) findViewById(R.id.mpp);
         mppchip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mppchip.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                mppchip.setTextAppearance(R.style.ThemeOverlay_AppTheme_ActionBar);
+                mtosppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mtosppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
+                mfmppchip.setTextAppearance(R.style.Widget_MaterialComponents_Chip_Action);
+                mfmppchip.setBackgroundColor(R.style.Widget_MaterialComponents_Chip_Action);
                 new PageTaskPP(AgreementActivity.this).execute();
             }
         });
