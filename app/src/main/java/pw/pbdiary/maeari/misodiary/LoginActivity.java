@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.http.SslError;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -28,9 +29,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -118,11 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         String[] IDChars = mIDField.getText().toString().split(" ");
         for (String ID : IDChars ) {
-            boolean isAllowedF = Pattern.matches("^[a-zA-Z]*$",ID);
-            /* if(!isAllowedF) {
-                mIDField.setError(getResources().getString(R.string.loginfirstchar));
-                canLogin = false;
-            } */
             boolean isAllowedC = Pattern.matches("^[a-zA-Z0-9_]*$",ID);
             if(!isAllowedC) {
                 mIDField.setError(getResources().getString(R.string.loginIDAllowchar));
@@ -138,26 +135,69 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         if(canLogin) {
-            mWebView.loadUrl("javascript:(function() {document.loginForm.uid.value= \""+mIDField.getText()+"\"; document.loginForm.pwd.value = \""+mPWField.getText()+"\";}) ();");
-            //mWebView.loadUrl("javascript:(function() {document.getElementsByName('loginForm').method='post'; document.getElementsByName('loginForm').action='https://www.misodiary.net/api_member/auth_token';})();");
-            //mWebView.loadUrl("javascript:(function() {var requestURL ='' ; document.loginForm.submit();}) ();");
-            CookieManager cM = CookieManager.getInstance();
-            String prevCookie = cM.getCookie("www.misodiary.net");
             String ua = mWebView.getSettings().getUserAgentString();
-            int fieldlength = 9;
-            JSONObject jObject = new JSONObject();
-            try {
-                jObject.put("uid",mIDField.getText());
-                jObject.put("pwd",mPWField.getText());
-                fieldlength += mIDField.getText().length()+mPWField.getText().length();
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.value_missing),Toast.LENGTH_LONG).show();
-            }
-
-            //Jsoup Login System will be constructed in this area.
-            //first this is logindata, second one is callback method.
+            Log.d("INFO","TRYING LOGIN");
+            new loginTask(ua).execute();
         }
+    }
+
+    public class loginTask extends AsyncTask<Void, Void, String> {
+        String ua;
+        loginTask(String ua) {
+            this.ua = ua;
+        }
+        @Override
+        protected String doInBackground(Void...voids) {
+            CookieManager cM = CookieManager.getInstance();
+            TextInputEditText mIDField = (TextInputEditText) findViewById(R.id.misoIDField);
+            TextInputEditText mPWField = (TextInputEditText) findViewById(R.id.misoPWField);
+            String fieldlength = String.valueOf(9+ Objects.requireNonNull(mIDField.getText()).length()+ Objects.requireNonNull(mPWField.getText()).length());
+            String prevCookie = cM.getCookie("www.misodiary.net");
+            try {
+                Connection.Response loginTokenRes = Jsoup.connect("https://www.misodiary.net/api_member/auth_token")
+                        .userAgent(ua)
+                        .referrer("https://www.misodiary.net/member/login")
+                        .followRedirects(true)
+                        .ignoreContentType(true)
+                        .postDataCharset("UTF-8")
+                        .header("Host","www.misodiary.net")
+                        .header("Connection","keep-alive")
+                        .header("Accept","*/*")
+                        .header("Origin","https://www.misodiary.net")
+                        .header("X-Requested-With","XMLHttpRequest")
+                        .header("Accept-Encoding","gzip, deflate")
+                        .header("Accept-Language","ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+                        .header("Cookie",prevCookie)
+                        .method(Connection.Method.POST)
+                        .data("uid",mIDField.getText().toString(),"pwd",mPWField.getText().toString())
+                        .execute();
+                cM.setCookie("https://www.misodiary.net","ci_session="+loginTokenRes.cookie("ci_session"));
+                return loginTokenRes.cookie("ci_session");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if(result.equals("failed")) {
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginFailed),Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("LOGIN_COOKIE",result);
+                loginprocess(result);
+            }
+        }
+    }
+
+    public void loginprocess(String loginedCookie) {
+        WebView mWebView = findViewById(R.id.loginWebView);
+        TextInputEditText mIDField = findViewById(R.id.misoIDField);
+        CookieManager cM = CookieManager.getInstance();
+        cM.setCookie("https://www.misodiary.net","ci_session="+loginedCookie);
+        Log.d("Logined",cM.getCookie("https://www.misodiary.net").toString());
+        mWebView.loadUrl("https://www.misodiary.net/home/dashboard/"+mIDField.getText());
     }
 
     public class loginweb extends WebViewClient {
@@ -210,12 +250,6 @@ public class LoginActivity extends AppCompatActivity {
                 CookieManager cM = CookieManager.getInstance();
                 SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
                 String cookieEn = cM.getCookie("www.misodiary.net");
-                /* try {
-                    cookieEn = URLDecoder.decode(cookieEn,"utf-8") + "; Expires=Fri, 31 Dec 2100 09:00:00 KST";
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } */
-                //Log.d("COOKIE", cM.getCookie("www.misodiary.net"));
                 SharedPreferences.Editor editor = cookie.edit();
                 editor.putString("cookie",cookieEn);
                 editor.apply();

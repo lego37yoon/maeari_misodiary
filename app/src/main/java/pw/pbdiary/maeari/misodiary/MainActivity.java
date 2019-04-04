@@ -23,7 +23,9 @@ import android.view.ViewTreeObserver;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebHistoryItem;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -448,52 +450,58 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mTextMessage = findViewById(R.id.title_main);
             if(mWebView.canGoBack()) {
-                mWebView.goBack();
-                String url = mWebView.getOriginalUrl();
-                if(url.startsWith("https://www.misodiary.net/main/opench")) {
-                    mTextMessage.setText(R.string.title_opench);
-                } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
-                    mTextMessage.setText(R.string.title_michinrandom);
-                } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                    mTextMessage.setText(R.string.title_profile);
-                } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
-                    Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
-                    startActivity(intent);
-                } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
-                    Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                    String keyword = url.replace("https://www.misodiary.net/post/search/","");
-                    intent.putExtra("keyword",keyword);
-                    startActivity(intent);
-                } else if(url.startsWith("https://www.misodiary.net/post/single")) {
-                    Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                    String postNumber = url.replace("https://www.misodiary.net/post/single/","");
-                    intent.putExtra("postNumber",postNumber);
-                    startActivity(intent);
-                } else if(url.startsWith("https://www.misodiary.net/home/main")) {
-                    Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                    String accountID = url.replace("https://www.misodiary.net/home/main/","");
-                    intent.putExtra("accountID",accountID);
-                    startActivity(intent);
-                } else if(url.startsWith("https://www.misodiary.net/member/login")) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                    if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
-                        mTextMessage.setText(R.string.title_opench);
-                    }
-                } else {
-                    try {
-                        Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(bi);
-                    }catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                backControl(mWebView);
             } else {
                 finish();
             }
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void backControl(WebView mWebView) {
+        mWebView.goBack();
+        String url = mWebView.getOriginalUrl();
+        WebBackForwardList currentHistory = mWebView.copyBackForwardList();
+        WebHistoryItem prevURL = currentHistory.getItemAtIndex(currentHistory.getCurrentIndex()-1);
+        if(url.startsWith("https://www.misodiary.net/main/opench")) {
+            mTextMessage.setText(R.string.title_opench);
+        } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+            mTextMessage.setText(R.string.title_michinrandom);
+        } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+            mTextMessage.setText(R.string.title_profile);
+        } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+            Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
+            startActivity(intent);
+        } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+            Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+            String keyword = url.replace("https://www.misodiary.net/post/search/","");
+            intent.putExtra("keyword",keyword);
+            startActivity(intent);
+        } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+            Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
+            String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+            intent.putExtra("postNumber",postNumber);
+            startActivity(intent);
+        } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+            Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
+            String accountID = url.replace("https://www.misodiary.net/home/main/","");
+            intent.putExtra("accountID",accountID);
+            startActivity(intent);
+        } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+            mWebView.goBackOrForward(mWebView.copyBackForwardList().getCurrentIndex()-2);
+            backControl(mWebView);
+        } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
+            if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                mTextMessage.setText(R.string.title_opench);
+            }
+        } else {
+            try {
+                Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(bi);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

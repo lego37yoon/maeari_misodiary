@@ -53,7 +53,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/misoid"
-        android:visibility="gone"
+        android:visibility="visible"
         app:boxStrokeColor="@color/colorPrimary"
         app:counterMaxLength="16"
         app:errorEnabled="true">
@@ -74,7 +74,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/misopw"
-        android:visibility="gone"
+        android:visibility="visible"
         app:boxStrokeColor="@color/colorPrimary"
         app:counterMaxLength="18"
         app:errorEnabled="true"
@@ -94,7 +94,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/misoautologin"
         android:textColor="@android:color/darker_gray" />
 
@@ -106,7 +106,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorPrimary"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/login_btn"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
         android:textSize="16sp"
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:onClick="onFindIDPWClicked"
         android:text="@string/misofindidpw"
         android:textAlignment="textEnd"
@@ -134,7 +134,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:onClick="onRegisterClicked"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/misoRegister"
         android:textAlignment="textEnd"
         android:textColor="@android:color/darker_gray" />
@@ -143,7 +143,7 @@
         android:id="@+id/logintoggle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <Button
             android:id="@+id/misoPrevious"
@@ -164,7 +164,7 @@
         android:id="@+id/previousLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <WebView

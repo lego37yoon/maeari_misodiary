@@ -98,7 +98,7 @@
             android:name=".NotiActivity"
             android:exported="false"
             android:label="@string/title_noti"
-            android:theme="@style/anotherTheme2">
+            android:theme="@style/anotherTheme3">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
