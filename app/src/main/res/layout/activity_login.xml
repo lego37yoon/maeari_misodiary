@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/loginLayout">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -94,7 +95,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:text="@string/misoautologin"
         android:textColor="@android:color/darker_gray" />
 

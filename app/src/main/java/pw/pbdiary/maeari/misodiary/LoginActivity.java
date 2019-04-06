@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
@@ -26,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -50,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         TextInputEditText mPWField = findViewById(R.id.misoPWField);
         mPWField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         mPWField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
     public void onFindIDPWClicked(View view) {
         misoCustomTab c = new misoCustomTab();
@@ -69,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         ConstraintLayout mToggle = findViewById(R.id.logintoggle);
         WebView mWebView = findViewById(R.id.loginWebView);
         Button mNewLogin = findViewById(R.id.misoNewLogin);
-        CheckBox mAutoLogin = findViewById(R.id.autologincb);
+        //CheckBox mAutoLogin = findViewById(R.id.autologincb);
         ConstraintLayout mPreviousLayout = findViewById(R.id.previousLayout);
         mIDLayout.setVisibility(View.GONE);
         mPWLayout.setVisibility(View.GONE);
@@ -79,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         mToggle.setVisibility(View.GONE);
         mWebView.setVisibility(View.VISIBLE);
         mNewLogin.setVisibility(View.VISIBLE);
-        mAutoLogin.setVisibility(View.GONE);
+        //mAutoLogin.setVisibility(View.GONE);
         mPreviousLayout.setVisibility(View.VISIBLE);
     }
 
@@ -92,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         ConstraintLayout mToggle = findViewById(R.id.logintoggle);
         WebView mWebView = findViewById(R.id.loginWebView);
         Button mNewLogin = findViewById(R.id.misoNewLogin);
-        CheckBox mAutoLogin = findViewById(R.id.autologincb);
+        //CheckBox mAutoLogin = findViewById(R.id.autologincb);
         ConstraintLayout mPreviousLayout = findViewById(R.id.previousLayout);
         mIDLayout.setVisibility(View.VISIBLE);
         mPWLayout.setVisibility(View.VISIBLE);
@@ -102,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         mToggle.setVisibility(View.VISIBLE);
         mWebView.setVisibility(View.GONE);
         mNewLogin.setVisibility(View.GONE);
-        mAutoLogin.setVisibility(View.GONE);
+        //mAutoLogin.setVisibility(View.GONE);
         mPreviousLayout.setVisibility(View.GONE);
     }
 
@@ -137,14 +142,16 @@ public class LoginActivity extends AppCompatActivity {
         if(canLogin) {
             String ua = mWebView.getSettings().getUserAgentString();
             Log.d("INFO","TRYING LOGIN");
-            new loginTask(ua).execute();
+            new loginTask(ua,view).execute();
         }
     }
 
     public class loginTask extends AsyncTask<Void, Void, String> {
         String ua;
-        loginTask(String ua) {
+        View v;
+        loginTask(String ua, View v) {
             this.ua = ua;
+            this.v = v;
         }
         @Override
         protected String doInBackground(Void...voids) {
@@ -171,8 +178,13 @@ public class LoginActivity extends AppCompatActivity {
                         .method(Connection.Method.POST)
                         .data("uid",mIDField.getText().toString(),"pwd",mPWField.getText().toString())
                         .execute();
-                cM.setCookie("https://www.misodiary.net","ci_session="+loginTokenRes.cookie("ci_session"));
-                return loginTokenRes.cookie("ci_session");
+                if(cM.getCookie("https://www.misodiary.net").equals("ci_session="+loginTokenRes.cookie("ci_session"))) {
+                    Snackbar.make(v,getResources().getString(R.string.loginFailed),Snackbar.LENGTH_LONG).show();
+                    return "failed";
+                } else {
+                    cM.setCookie("https://www.misodiary.net","ci_session="+loginTokenRes.cookie("ci_session"));
+                    return loginTokenRes.cookie("ci_session");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -182,9 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if(result.equals("failed")) {
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginFailed),Toast.LENGTH_SHORT).show();
-            } else {
+            if(!result.equals("failed")) {
                 Log.d("LOGIN_COOKIE",result);
                 loginprocess(result);
             }
