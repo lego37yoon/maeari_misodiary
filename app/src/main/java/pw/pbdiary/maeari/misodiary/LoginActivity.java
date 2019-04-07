@@ -17,6 +17,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
@@ -25,6 +26,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -41,10 +43,12 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     WebView mWebView;
+    MaterialButton misoLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        misoLogin = findViewById(R.id.misoLogin);
         mWebView = findViewById(R.id.loginWebView);
         mWebView.setWebViewClient(new loginweb());
         mWebView.loadUrl("https://www.misodiary.net/member/login");
@@ -55,6 +59,16 @@ public class LoginActivity extends AppCompatActivity {
         mPWField.setTransformationMethod(PasswordTransformationMethod.getInstance());
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        mPWField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                    misoLogin.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
     public void onFindIDPWClicked(View view) {
         misoCustomTab c = new misoCustomTab();
@@ -114,20 +128,22 @@ public class LoginActivity extends AppCompatActivity {
     public void onSubmitClicked(View view) {
         TextInputEditText mIDField = findViewById(R.id.misoIDField);
         TextInputEditText mPWField = findViewById(R.id.misoPWField);
+        TextInputLayout misoID = findViewById(R.id.misoID);
+        TextInputLayout misoPW = findViewById(R.id.misoPW);
         boolean canLogin = true;
         if(Objects.requireNonNull(mIDField.getText()).length() < 2 || mIDField.getText().length() > 16) {
-            mIDField.setError(getResources().getText(R.string.loginIDlength));
+            misoID.setError(getResources().getText(R.string.loginIDlength));
             canLogin = false;
         }
         if(Objects.requireNonNull(mPWField.getText()).length() < 8 || mPWField.getText().length() > 18) {
-            mPWField.setError(getResources().getText(R.string.loginPWlength));
+            misoPW.setError(getResources().getText(R.string.loginPWlength));
             canLogin = false;
         }
         String[] IDChars = mIDField.getText().toString().split(" ");
         for (String ID : IDChars ) {
             boolean isAllowedC = Pattern.matches("^[a-zA-Z0-9_]*$",ID);
             if(!isAllowedC) {
-                mIDField.setError(getResources().getString(R.string.loginIDAllowchar));
+                misoID.setError(getResources().getString(R.string.loginIDAllowchar));
                 canLogin = false;
             }
         }
@@ -135,12 +151,14 @@ public class LoginActivity extends AppCompatActivity {
         for (String PW : PWChars) {
             boolean isAllowedC = Pattern.matches("^[a-zA-Z0-9!@#$%^&*()]*$",PW);
             if(!isAllowedC) {
-                mPWField.setError(getResources().getString(R.string.loginPWAllowchar));
+                misoPW.setError(getResources().getString(R.string.loginPWAllowchar));
                 canLogin = false;
             }
         }
         if(canLogin) {
             String ua = mWebView.getSettings().getUserAgentString();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
             Log.d("INFO","TRYING LOGIN");
             new loginTask(ua,view).execute();
         }
@@ -158,7 +176,6 @@ public class LoginActivity extends AppCompatActivity {
             CookieManager cM = CookieManager.getInstance();
             TextInputEditText mIDField = (TextInputEditText) findViewById(R.id.misoIDField);
             TextInputEditText mPWField = (TextInputEditText) findViewById(R.id.misoPWField);
-            String fieldlength = String.valueOf(9+ Objects.requireNonNull(mIDField.getText()).length()+ Objects.requireNonNull(mPWField.getText()).length());
             String prevCookie = cM.getCookie("www.misodiary.net");
             try {
                 Connection.Response loginTokenRes = Jsoup.connect("https://www.misodiary.net/api_member/auth_token")
@@ -195,19 +212,25 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if(!result.equals("failed")) {
-                Log.d("LOGIN_COOKIE",result);
                 loginprocess(result);
             }
         }
     }
 
     public void loginprocess(String loginedCookie) {
-        WebView mWebView = findViewById(R.id.loginWebView);
-        TextInputEditText mIDField = findViewById(R.id.misoIDField);
         CookieManager cM = CookieManager.getInstance();
         cM.setCookie("https://www.misodiary.net","ci_session="+loginedCookie);
-        Log.d("Logined",cM.getCookie("https://www.misodiary.net").toString());
-        mWebView.loadUrl("https://www.misodiary.net/home/dashboard/"+mIDField.getText());
+        SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+        String cookieEn = cM.getCookie("www.misodiary.net");
+        SharedPreferences.Editor editor = cookie.edit();
+        editor.putString("cookie",cookieEn);
+        editor.apply();
+        Intent intent = new Intent();
+        intent.putExtra("cookie","ci_session="+loginedCookie);
+        String mainStatus = intent.getStringExtra("status");
+        intent.putExtra("status",mainStatus);
+        setResult(RESULT_OK,intent);
+        finish();
     }
 
     public class loginweb extends WebViewClient {
@@ -256,8 +279,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
+            CookieManager cM = CookieManager.getInstance();
             if (!url.startsWith("https://www.misodiary.net/member")) {
-                CookieManager cM = CookieManager.getInstance();
                 SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
                 String cookieEn = cM.getCookie("www.misodiary.net");
                 SharedPreferences.Editor editor = cookie.edit();
@@ -305,11 +328,10 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    String status = "opench";
-                    intent.putExtra("status", status);
-                }
+                Intent intent = new Intent();
+                intent.putExtra("cookie","ci_session="+cM.getCookie("www.misodiary.net"));
+                setResult(RESULT_OK,intent);
+                finish();
             } else {
                 try {
                     misoCustomTab c = new misoCustomTab();
@@ -333,6 +355,9 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
             return false;
+        }
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            misoLogin.performClick();
         }
         return super.onKeyDown(keyCode, event);
     }

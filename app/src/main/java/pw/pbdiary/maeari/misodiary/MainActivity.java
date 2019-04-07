@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
     //파일 업로드를 위한 변수
     private static final String TYPE_IMAGE = "image/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
+    private static final int LOGIN_REQUEST_CODE_MAIN = 2;
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
@@ -260,6 +262,17 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
 
     public class misoWeb extends WebViewClient {
         @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","profile");
+                editor.apply();
+            }
+        }
+
+        @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
             if(url.startsWith("https://www.misodiary.net/member/notification")) {
@@ -299,13 +312,27 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         public void onPageFinished(WebView view, String url) {
             if(url.startsWith("https://www.misodiary.net/main/opench")) {
                 mTextMessage.setText(R.string.title_opench);
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","opench");
+                editor.apply();
             } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
                 mTextMessage.setText(R.string.title_michinrandom);
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","michinrandom");
+                editor.apply();
             } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
                 mTextMessage.setText(R.string.title_profile);
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","profile");
+                editor.apply();
             } else if(url.startsWith("https://www.misodiary.net/member/login")) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                SharedPreferences statusRequest = getSharedPreferences("status",Context.MODE_PRIVATE);
+                Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
+                loginIntent.putExtra("status",statusRequest.getString("status","opench"));
+                startActivityForResult(loginIntent,LOGIN_REQUEST_CODE_MAIN);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
                     mTextMessage.setText(R.string.title_opench);
@@ -387,6 +414,10 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
     }
     public void onProfileClicked(View view) {
         mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+        SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = statusSave.edit();
+        editor.putString("status","profile");
+        editor.apply();
     }
 
     @Override
@@ -415,6 +446,32 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             mFilePathCallback = null;
             mUploadMessage = null;
             super.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == LOGIN_REQUEST_CODE_MAIN && resultCode == RESULT_OK) {
+            super.onActivityResult(requestCode,resultCode,data);
+            if(data.getStringExtra("cookie")==null) {
+                mWebView.goBack();
+            } else {
+                CookieManager cM = CookieManager.getInstance();
+                cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
+                if(data.getStringExtra("status") != null) {
+                    String status = getIntent().getStringExtra("status");
+                    switch (status) {
+                        case "opench":
+                            mTextMessage.setText(R.string.title_opench);
+                            mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                            break;
+                        case "michinrandom":
+                            mTextMessage.setText(R.string.title_michinrandom);
+                            mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                            break;
+                        case "profile":
+                            mTextMessage.setText(R.string.title_profile);
+                            mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                            break;
+                    }
+                }
+            }
         }
     }
 
@@ -488,10 +545,10 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             String accountID = url.replace("https://www.misodiary.net/home/main/","");
             intent.putExtra("accountID",accountID);
             startActivity(intent);
-        } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+        } /* else if(url.startsWith("https://www.misodiary.net/member/login")) {
             mWebView.goBackOrForward(mWebView.copyBackForwardList().getCurrentIndex()-2);
             backControl(mWebView);
-        } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
+        } */ else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
             if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
                 mTextMessage.setText(R.string.title_opench);
             }

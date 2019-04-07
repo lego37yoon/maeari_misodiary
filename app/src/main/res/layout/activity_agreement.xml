@@ -53,37 +53,39 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agreeToolbar">
-
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/amChoice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
+            app:singleLine="true"
+            app:singleSelection="true">
             <com.google.android.material.chip.Chip
                 android:id="@+id/mfmpp"
-                style="@style/Widget.MaterialComponents.Chip.Action"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mfm_pp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/mtos"
-                style="@style/Widget.MaterialComponents.Chip.Action"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ms_tos" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/mpp"
-                style="@style/Widget.MaterialComponents.Chip.Action"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ms_pp" />
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
     <ScrollView

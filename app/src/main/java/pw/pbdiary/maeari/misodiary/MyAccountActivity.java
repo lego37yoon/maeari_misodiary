@@ -153,6 +153,15 @@ public class MyAccountActivity extends AppCompatActivity {
             mUploadMessage = null;
             super.onActivityResult(requestCode, resultCode, data);
         }
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            if (data.getStringExtra("cookie") != null) {
+                CookieManager cM = CookieManager.getInstance();
+                cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
+                mWebView.loadUrl("https://www.misodiary.net/member/setting");
+            } else {
+                finish();
+            }
+        }
     }
 
     private Uri getResultUri(Intent data) {
@@ -223,7 +232,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/member/login")) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,2);
             } else if (url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 view.loadUrl(url);
             } else {
@@ -274,4 +283,6 @@ public class MyAccountActivity extends AppCompatActivity {
             dialog.show();
         }
     }
+
+
 }

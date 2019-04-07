@@ -1,5 +1,6 @@
 package pw.pbdiary.maeari.misodiary;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
@@ -77,7 +79,7 @@ public class NotiActivity extends AppCompatActivity {
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/member/login")) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,2);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -143,6 +145,20 @@ public class NotiActivity extends AppCompatActivity {
             });
             final AlertDialog dialog = builder.create();
             dialog.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode==RESULT_OK) {
+            if(data.getStringExtra("cookie")!=null) {
+                CookieManager cM = CookieManager.getInstance();
+                cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
+                mWebView.loadUrl("https://www.misodiary.net/member/notification");
+            } else {
+                finish();
+            }
         }
     }
 }

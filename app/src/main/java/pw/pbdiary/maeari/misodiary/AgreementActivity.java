@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,28 +24,23 @@ public class AgreementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
-        final Chip mfmppchip = (Chip) findViewById(R.id.mfmpp);
-        final Chip mtosppchip = (Chip) findViewById(R.id.mtos);
-        final Chip mppchip = (Chip) findViewById(R.id.mpp);
-        mfmppchip.setCheckable(false);
-        //mfmppchip.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        //mfmppchip.setTextAppearance(R.style.ThemeOverlay_AppTheme_ActionBar);
+        Chip mfmppchip = (Chip) findViewById(R.id.mfmpp);
+        ChipGroup misoAgree = (ChipGroup) findViewById(R.id.amChoice);
+        mfmppchip.setChecked(true);
         new PageTaskMPP(AgreementActivity.this).execute();
-        mfmppchip.setOnClickListener(new View.OnClickListener() {
+        misoAgree.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                new PageTaskMPP(AgreementActivity.this).execute();
-            }
-        });
-        mtosppchip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new PageTaskToS(AgreementActivity.this).execute();
-            }
-        });
-        mppchip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {new PageTaskPP(AgreementActivity.this).execute();
+            public void onCheckedChanged(ChipGroup chipGroup, int i) {
+                switch (chipGroup.getCheckedChipId()) {
+                    case R.id.mfmpp:
+                        new PageTaskMPP(AgreementActivity.this).execute();
+                        break;
+                    case R.id.mtos:
+                        new PageTaskToS(AgreementActivity.this).execute();
+                        break;
+                    case R.id.mpp:
+                        new PageTaskPP(AgreementActivity.this).execute();
+                }
             }
         });
     }
