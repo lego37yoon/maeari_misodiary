@@ -50,6 +50,14 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
                         break;
                     case R.id.nav_profile:
+                        SharedPreferences forProfileOnly= getActivity().getSharedPreferences("ifP",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = forProfileOnly.edit();
+                        editor2.putString("ifP","true");
+                        editor2.apply();
+                        SharedPreferences statusSave = getActivity().getSharedPreferences("status",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor3 = statusSave.edit();
+                        editor3.putString("status","profile");
+                        editor3.apply();
                         mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
                         mA.mTextMessage = Objects.requireNonNull(getActivity()).findViewById(R.id.title_main);
@@ -57,6 +65,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         mA.mTextMessage.setText(getResources().getString(R.string.title_profile));
                         fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
+
                         break;
                     case R.id.nav_logout:
                         mA = new MainActivity();
@@ -65,7 +74,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         SharedPreferences.Editor editor = cookie.edit();
                         editor.putString("cookie","");
                         editor.apply();
-                        android.webkit.CookieManager cM = CookieManager.getInstance();
+                        CookieManager cM = CookieManager.getInstance();
                         cM.removeAllCookies(null);
                         mA.mWebView.reload();
                         fm = getActivity().getSupportFragmentManager();

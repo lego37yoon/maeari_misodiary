@@ -6,8 +6,8 @@ android {
         applicationId "pw.pbdiary.maeari.misodiary"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 20
-        versionName "1.1 RC1"
+        versionCode 21
+        versionName "1.1 RC2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

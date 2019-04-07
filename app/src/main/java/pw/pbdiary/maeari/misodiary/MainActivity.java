@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         setContentView(R.layout.activity_main);
         BottomAppBar mAppBar = findViewById(R.id.navigation);
         setSupportActionBar(mAppBar);
+        //For My Profile.
+        SharedPreferences forProfileOnly= getSharedPreferences("ifP",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = forProfileOnly.edit();
+        editor2.putString("ifP","false");
+        editor2.apply();
         //pressedTime = System.currentTimeMillis();
         SharedPreferences sp = getSharedPreferences(saveFirst, Context.MODE_PRIVATE);
         if (!sp.getBoolean("first",false)) {
@@ -411,11 +416,16 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         startActivity(intent);
     }
     public void onProfileClicked(View view) {
-        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
         SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = statusSave.edit();
         editor.putString("status","profile");
         editor.apply();
+        SharedPreferences forProfileOnly= getSharedPreferences("ifP",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = forProfileOnly.edit();
+        editor2.putString("ifP","true");
+        editor2.apply();
+        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+
     }
 
     @Override
@@ -451,6 +461,8 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             if (data.getStringExtra("cookie") == null) {
                 mWebView.goBack();
             } else {
+                SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences forProfile = getSharedPreferences("ifP",Context.MODE_PRIVATE);
                 CookieManager cM = CookieManager.getInstance();
                 cM.setCookie("www.misodiary.net", data.getStringExtra("cookie"));
                 if (data.getStringExtra("status") != null) {
@@ -458,11 +470,9 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     switch (status) {
                         case "opench":
                             mTextMessage.setText(R.string.title_opench);
-                            SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
-                            if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")) {
+                            if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")|| Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                                 mTextMessage.setText(R.string.title_profile);
                                 mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
-
                             } else {
                                 mWebView.loadUrl("https://www.misodiary.net/");
                             }
@@ -477,8 +487,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                             break;
                     }
                 } else {
-                    SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
-                    if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")) {
+                    if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile") || Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                         mTextMessage.setText(R.string.title_profile);
                         mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
 
