@@ -80,4 +80,5 @@
     <string name="setting_appsetting">App Settings</string>
     <string name="title_help">Help</string>
     <string name="agreement">Agreements</string>
+    <string name="mfmagreelink">https://latios.pbdiary.pw/maeari/misodiary/privacypolicy_en.html</string>
 </resources>

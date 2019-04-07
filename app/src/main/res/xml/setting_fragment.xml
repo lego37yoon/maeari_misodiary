@@ -27,5 +27,10 @@
                 android:targetPackage="pw.pbdiary.maeari.misodiary"
                 android:targetClass="pw.pbdiary.maeari.misodiary.AppInfoActivity" />
         </Preference>
+        <Preference android:title="@string/agree_content_2">
+            <intent
+                android:targetPackage="pw.pbdiary.maeari.misodiary"
+                android:targetClass="pw.pbdiary.maeari.misodiary.AgreementActivity" />
+        </Preference>
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

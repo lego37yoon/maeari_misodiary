@@ -12,7 +12,7 @@
     <string name="menu_description_noti">알림</string>
     <string name="menu_description_myaccount">내 계정</string>
     <string name="menu_description_appinfo">앱 정보</string>
-    <string name="title_appinfo">메아리 for 미소일기는...</string>
+    <string name="title_appinfo">메아리 for 미소일기는…</string>
     <string name="app_logo">앱 로고</string>
     <string name="version_string"> \"Brooklyn\"</string>
     <string name="app_info_notice">이 앱은 오픈소스 소프트웨어를 사용하고 있습니다. 사용하는 소프트웨어의 라이선스에 대해서는 아래 링크를 참고해주세요.</string>
@@ -25,7 +25,7 @@
     <string name="title_single_post">게시물 보기</string>
     <string name="title_my_account">내 계정 설정</string>
     <string name="back">뒤로</string>
-    <string name="search_hint">미소일기 게시물을 검색하세요...</string>
+    <string name="search_hint">미소일기 게시물을 검색하세요…</string>
     <string name="requestPermission">권한요청</string>
     <string name="welcome">환영합니다.</string>
     <string name="requestPermissionDesc1">메아리 for 미소일기에서 사진을 찍어 바로 올리는 기능을 사용하기 위해, \n다음 권한을 요청합니다. \n동의하지 않으셔도 갤러리에서 사진을 올릴 수 있습니다.</string>
@@ -79,4 +79,5 @@
     <string name="setting_appsetting">앱 설정</string>
     <string name="title_help">도움말</string>
     <string name="agreement">약관동의</string>
+    <string name="mfmagreelink">https://latios.pbdiary.pw/maeari/misodiary/privacypolicy.html</string>
 </resources>

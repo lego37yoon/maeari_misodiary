@@ -26,14 +26,15 @@ public class AgreementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agreement);
         Chip mfmppchip = (Chip) findViewById(R.id.mfmpp);
         ChipGroup misoAgree = (ChipGroup) findViewById(R.id.amChoice);
+        final String mfmppLink = getResources().getString(R.string.mfmagreelink);
         mfmppchip.setChecked(true);
-        new PageTaskMPP(AgreementActivity.this).execute();
+        new PageTaskMPP(AgreementActivity.this,mfmppLink).execute();
         misoAgree.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup chipGroup, int i) {
                 switch (chipGroup.getCheckedChipId()) {
                     case R.id.mfmpp:
-                        new PageTaskMPP(AgreementActivity.this).execute();
+                        new PageTaskMPP(AgreementActivity.this,mfmppLink).execute();
                         break;
                     case R.id.mtos:
                         new PageTaskToS(AgreementActivity.this).execute();
@@ -104,14 +105,15 @@ public class AgreementActivity extends AppCompatActivity {
     private static class PageTaskMPP extends AsyncTask<Void,Void,String> {
         private Document doc;
         private WeakReference<AgreementActivity> activityReference;
-
-        PageTaskMPP(AgreementActivity context) {
+        private String mfmppLink;
+        PageTaskMPP(AgreementActivity context, String mfmppLink) {
             activityReference = new WeakReference<>(context);
+            this.mfmppLink = mfmppLink;
         }
         @Override
         protected String doInBackground(Void... params) {
             try{
-                doc = Jsoup.connect("https://latios.pbdiary.pw/maeari/misodiary/privacypolicy.html").get();
+                doc = Jsoup.connect(mfmppLink).get();
             } catch (IOException e){
                 e.printStackTrace();
             }
