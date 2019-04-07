@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                         .method(Connection.Method.POST)
                         .data("uid",mIDField.getText().toString(),"pwd",mPWField.getText().toString())
                         .execute();
-                if(cM.getCookie("https://www.misodiary.net").equals("ci_session="+loginTokenRes.cookie("ci_session"))) {
+                if(loginTokenRes.cookie("ci_session")==null) {
                     Snackbar.make(v,getResources().getString(R.string.loginFailed),Snackbar.LENGTH_LONG).show();
                     return "failed";
                 } else {
