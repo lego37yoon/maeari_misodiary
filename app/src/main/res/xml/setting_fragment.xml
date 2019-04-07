@@ -7,11 +7,11 @@
                 android:targetPackage="pw.pbdiary.maeari.misodiary"
                 android:targetClass="pw.pbdiary.maeari.misodiary.MyAccountActivity" />
         </Preference>
-        <SwitchPreferenceCompat
+        <!-- <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="autologin"
             android:enabled="false"
-            android:title="@string/misoautologin" />
+            android:title="@string/misoautologin" /> -->
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_appsetting">
         <ListPreference

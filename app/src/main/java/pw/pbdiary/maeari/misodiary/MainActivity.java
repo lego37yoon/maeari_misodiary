@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
     private static final String TYPE_IMAGE = "image/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private static final int LOGIN_REQUEST_CODE_MAIN = 2;
+    private static final int FIRST_START_REQUEST_CODE = 3;
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean("first",true);
             editor.apply();
-            Intent intent = new Intent(this, PermissionCheckInfo.class);
-            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(),PermissionCheckInfo.class);
+            startActivityForResult(intent,FIRST_START_REQUEST_CODE);
         }
         mTextMessage = (TextView) findViewById(R.id.title_main);
         mWebView = (WebView) findViewById(R.id.webView);
@@ -188,16 +189,24 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             }
         } else {
             SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = statusSave.edit();
             switch (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench"))){
                 case "opench":
+                    editor.putString("status","opench");
+                    editor.apply();
                     mTextMessage.setText(R.string.title_opench);
                     mWebView.loadUrl("https://www.misodiary.net/main/opench");
                     break;
                 case "michinrandom":
+                    editor.putString("status","michinrandom");
+                    editor.apply();
                     mTextMessage.setText(R.string.title_michinrandom);
                     mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
                     break;
                 case "profile":
+                    editor.putString("status","profile");
+                    editor.apply();
                     mTextMessage.setText(R.string.title_profile);
                     mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
                     break;
@@ -261,17 +270,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
     }
 
     public class misoWeb extends WebViewClient {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = statusSave.edit();
-                editor.putString("status","profile");
-                editor.apply();
-            }
-        }
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
@@ -448,18 +446,26 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             super.onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == LOGIN_REQUEST_CODE_MAIN && resultCode == RESULT_OK) {
-            super.onActivityResult(requestCode,resultCode,data);
-            if(data.getStringExtra("cookie")==null) {
+            super.onActivityResult(requestCode, resultCode, data);
+            mWebView.setVisibility(View.VISIBLE);
+            if (data.getStringExtra("cookie") == null) {
                 mWebView.goBack();
             } else {
                 CookieManager cM = CookieManager.getInstance();
-                cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
-                if(data.getStringExtra("status") != null) {
+                cM.setCookie("www.misodiary.net", data.getStringExtra("cookie"));
+                if (data.getStringExtra("status") != null) {
                     String status = getIntent().getStringExtra("status");
                     switch (status) {
                         case "opench":
                             mTextMessage.setText(R.string.title_opench);
-                            mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                            SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
+                            if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")) {
+                                mTextMessage.setText(R.string.title_profile);
+                                mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+
+                            } else {
+                                mWebView.loadUrl("https://www.misodiary.net/");
+                            }
                             break;
                         case "michinrandom":
                             mTextMessage.setText(R.string.title_michinrandom);
@@ -470,8 +476,19 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                             mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
                             break;
                     }
+                } else {
+                    SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
+                    if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")) {
+                        mTextMessage.setText(R.string.title_profile);
+                        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+
+                    } else {
+                        mWebView.loadUrl("https://www.misodiary.net/");
+                    }
                 }
             }
+        } else if(requestCode != FIRST_START_REQUEST_CODE && resultCode != RESULT_OK) {
+            finish();
         }
     }
 

@@ -159,6 +159,8 @@ public class NotiActivity extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else {
+            finish();
         }
     }
 }

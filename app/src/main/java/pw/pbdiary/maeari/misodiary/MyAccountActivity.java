@@ -161,6 +161,8 @@ public class MyAccountActivity extends AppCompatActivity {
             } else {
                 finish();
             }
+        } else {
+            finish();
         }
     }
 

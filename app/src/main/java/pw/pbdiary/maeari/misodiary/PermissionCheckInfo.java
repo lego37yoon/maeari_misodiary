@@ -33,12 +33,13 @@ public class PermissionCheckInfo extends AppCompatActivity {
     public void onStartMainClicked(View v) {
         CheckBox cb = findViewById(R.id.checkBox);
         if(cb.isChecked()) {
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(i);
             SharedPreferences sp = getSharedPreferences("saveFirst", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putBoolean("first",true);
             editor.apply();
+            Intent i = new Intent();
+            setResult(RESULT_OK,i);
+            finish();
         } else {
             Toast.makeText(getApplicationContext(),getResources().getString(R.string.check_agree),Toast.LENGTH_LONG).show();
         }
@@ -66,6 +67,8 @@ public class PermissionCheckInfo extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults.length >0) {
+            Intent i = new Intent();
+            setResult(RESULT_OK,i);
             finish();
         }
     }
