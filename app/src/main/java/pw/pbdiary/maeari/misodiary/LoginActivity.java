@@ -286,6 +286,19 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = cookie.edit();
                 editor.putString("cookie",cookieEn);
                 editor.apply();
+                Intent intent = new Intent();
+                intent.putExtra("cookie",cookieEn);
+                String mainStatus = intent.getStringExtra("status");
+                intent.putExtra("status",mainStatus);
+                setResult(RESULT_OK,intent);
+                finish();
+            } else {
+                try {
+                    misoCustomTab c = new misoCustomTab();
+                    c.launch(LoginActivity.this,url);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             return super.shouldOverrideUrlLoading(view, request);
         }

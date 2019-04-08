@@ -230,15 +230,15 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodairy.net")){
-                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net/")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "opench";
                     intent.putExtra("status", status);
                 }
             } else {
                 try {
-                    Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(bi);
+                    misoCustomTab c = new misoCustomTab();
+                    c.launch(SearchActivity.this,url);
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -331,7 +331,7 @@ public class SearchActivity extends AppCompatActivity {
                 result = Uri.parse(mCameraPhotoPath);
             }
         } else {
-            String filePath = "";
+            String filePath;
             filePath = data.getDataString();
             result = Uri.parse(filePath);
         }
