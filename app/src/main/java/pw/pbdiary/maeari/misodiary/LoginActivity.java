@@ -287,59 +287,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("cookie",cookieEn);
                 editor.apply();
             }
-            if (url.startsWith("https://www.misodiary.net/main")) {
-                if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("openKeyword", url);
-                    String status = "opench";
-                    intent.putExtra("status", status);
-                } else if (url.startsWith("https://www.misodiary.net/main/random_friends")) {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    String status = "michinrandom";
-                    i.putExtra("status", status);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-                }
-            } else if (url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                String status = "profile";
-                i.putExtra("status", status);
-                startActivity(i);
-            } else if (url.startsWith("https://www.misodiary.net/member/notification")) {
-                Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
-                startActivity(intent);
-            } else if (url.startsWith("https://www.misodiary.net/member/setting")) {
-                view.loadUrl(url);
-            } else if (url.startsWith("https://www.misodiary.net/post/search")) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                String keyword = url.replace("https://www.misodiary.net/post/search/", "");
-                intent.putExtra("keyword", keyword);
-                startActivity(intent);
-            } else if (url.startsWith("https://www.misodiary.net/post/single")) {
-                Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                String postNumber = url.replace("https://www.misodiary.net/post/single/","");
-                intent.putExtra("postNumber",postNumber);
-                startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/home/main")) {
-                Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("https://www.misodiary.net/home/main/","");
-                intent.putExtra("accountID",accountID);
-                startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                Intent intent = new Intent();
-                intent.putExtra("cookie","ci_session="+cM.getCookie("www.misodiary.net"));
-                setResult(RESULT_OK,intent);
-                finish();
-            } else {
-                try {
-                    misoCustomTab c = new misoCustomTab();
-                    c.launch(LoginActivity.this,url);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             return super.shouldOverrideUrlLoading(view, request);
         }
     }

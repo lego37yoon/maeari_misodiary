@@ -81,9 +81,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         //pressedTime = System.currentTimeMillis();
         SharedPreferences sp = getSharedPreferences(saveFirst, Context.MODE_PRIVATE);
         if (!sp.getBoolean("first",false)) {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("first",true);
-            editor.apply();
             Intent intent = new Intent(getApplicationContext(),PermissionCheckInfo.class);
             startActivityForResult(intent,FIRST_START_REQUEST_CODE);
         }
@@ -473,6 +470,9 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                             if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")|| Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                                 mTextMessage.setText(R.string.title_profile);
                                 mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                                SharedPreferences.Editor editor = forProfile.edit();
+                                editor.putString("ifP","false");
+                                editor.apply();
                             } else {
                                 mWebView.loadUrl("https://www.misodiary.net/");
                             }
@@ -490,7 +490,9 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile") || Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                         mTextMessage.setText(R.string.title_profile);
                         mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
-
+                        SharedPreferences.Editor editor = forProfile.edit();
+                        editor.putString("ifP","false");
+                        editor.apply();
                     } else {
                         mWebView.loadUrl("https://www.misodiary.net/");
                     }
