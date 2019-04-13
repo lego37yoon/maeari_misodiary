@@ -2,11 +2,15 @@ package pw.pbdiary.maeari.misodiary;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -17,6 +21,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.UnknownHostException;
 
 public class AgreementActivity extends AppCompatActivity {
 
@@ -62,6 +67,11 @@ public class AgreementActivity extends AppCompatActivity {
             try{
                 Document doc = Jsoup.connect("https://www.misodiary.net/member/register").get();
                 elementone = doc.select("div[class=policy]").eq(0);
+            } catch (UnknownHostException e) {
+                Looper.prepare();
+                Toast.makeText(activityReference.get().getApplicationContext(),activityReference.get().getResources().getString(R.string.noInternetConnection),Toast.LENGTH_LONG).show();
+                Looper.loop();
+                e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -88,6 +98,10 @@ public class AgreementActivity extends AppCompatActivity {
             try{
                 Document doc = Jsoup.connect("https://www.misodiary.net/member/register").get();
                 elementtwo = doc.select("div[class=policy]").eq(1);
+            } catch (UnknownHostException e) {
+                Looper.prepare();
+                Toast.makeText(activityReference.get().getApplicationContext(),activityReference.get().getResources().getString(R.string.noInternetConnection),Toast.LENGTH_LONG).show();
+                Looper.loop();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -114,6 +128,11 @@ public class AgreementActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try{
                 doc = Jsoup.connect(mfmppLink).get();
+            } catch(UnknownHostException e) {
+                Looper.prepare();
+                Toast.makeText(activityReference.get().getApplicationContext(),activityReference.get().getResources().getString(R.string.noInternetConnection),Toast.LENGTH_LONG).show();
+                activityReference.get().finish();
+                Looper.loop();
             } catch (IOException e){
                 e.printStackTrace();
             }

@@ -80,4 +80,5 @@
     <string name="title_help">도움말</string>
     <string name="agreement">약관동의</string>
     <string name="mfmagreelink">https://latios.pbdiary.pw/maeari/misodiary/privacypolicy.html</string>
+    <string name="noInternetConnection">인터넷에 연결되어있지 않습니다.</string>
 </resources>
