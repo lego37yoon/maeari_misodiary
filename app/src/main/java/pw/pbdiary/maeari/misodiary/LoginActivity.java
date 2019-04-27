@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.http.SslError;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         mWebView.loadUrl("https://www.misodiary.net/member/login");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
+        TextInputEditText mIDField = findViewById(R.id.misoIDField);
         TextInputEditText mPWField = findViewById(R.id.misoPWField);
         mPWField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         mPWField.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -69,6 +71,10 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mIDField.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
+            mPWField.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
+        }
     }
     public void onFindIDPWClicked(View view) {
         misoCustomTab c = new misoCustomTab();

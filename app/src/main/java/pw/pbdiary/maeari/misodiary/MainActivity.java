@@ -530,6 +530,8 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         super.onResume();
     }
 
+
+
     //뒤로가기 누를때
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
