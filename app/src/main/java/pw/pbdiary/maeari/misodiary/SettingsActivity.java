@@ -14,7 +14,4 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.settingLayout,new SettingFragment()).commit();
     }
 
-    public void onSettingsBackPressed(View view) {
-        finish();
-    }
 }

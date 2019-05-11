@@ -81,4 +81,9 @@
     <string name="agreement">약관동의</string>
     <string name="mfmagreelink">https://latios.pbdiary.pw/maeari/misodiary/privacypolicy.html</string>
     <string name="noInternetConnection">인터넷에 연결되어있지 않습니다.</string>
+    <string name="loginSetting">로그인 설정</string>
+    <string name="loginAutofillOption">자동완성 지원(베타)</string>
+    <string name="setting_cachedelete">캐시 삭제</string>
+    <string name="setttng_autodelcache">종료할 때 캐시 삭제</string>
+    <string name="error_failed_del_cache">캐시를 삭제하지 못했습니다.</string>
 </resources>

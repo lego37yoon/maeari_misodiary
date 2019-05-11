@@ -70,11 +70,11 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                     case R.id.nav_logout:
                         mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
+                        CookieManager cM = CookieManager.getInstance();
                         SharedPreferences cookie = Objects.requireNonNull(getContext()).getSharedPreferences("cookie", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = cookie.edit();
                         editor.putString("cookie","");
                         editor.apply();
-                        CookieManager cM = CookieManager.getInstance();
                         cM.removeAllCookies(null);
                         mA.mWebView.reload();
                         fm = getActivity().getSupportFragmentManager();

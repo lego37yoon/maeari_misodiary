@@ -2,7 +2,6 @@ package pw.pbdiary.maeari.misodiary;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,10 +44,8 @@ public class MyAccountActivity extends AppCompatActivity {
 
         mWebView = (WebView) findViewById(R.id.myaccount_webview);
         mWebView.setWebViewClient(new misoWeb4());
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
         mWebView.loadUrl("https://www.misodiary.net/member/setting");
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onCloseWindow(WebView w) {
                 super.onCloseWindow(w);

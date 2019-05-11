@@ -13,6 +13,13 @@
             android:enabled="false"
             android:title="@string/misoautologin" /> -->
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/loginSetting">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="autofill"
+            android:enabled="true"
+            android:title="@string/loginAutofillOption" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_appsetting">
         <ListPreference
             android:key="screendefault"
@@ -20,6 +27,14 @@
             android:entryValues="@array/array_prefsc"
             android:defaultValue="opench"
             android:title="@string/setting_mainsc" />
+        <Preference
+            android:title="@string/setting_cachedelete"
+            android:key="deleteCache"/>
+        <!-- <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="autodeletecache"
+            android:enabled="false"
+            android:title="setttng_autodelcache" /> -->
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_help">
         <Preference android:title="@string/title_appinfo">

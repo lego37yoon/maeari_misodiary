@@ -3,6 +3,7 @@ package pw.pbdiary.maeari.misodiary;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -71,7 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        SharedPreferences autofillsupport = PreferenceManager.getDefaultSharedPreferences(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && autofillsupport.getBoolean("autofill",false)) {
             mIDField.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
             mPWField.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
         }
