@@ -81,7 +81,7 @@
     <string name="setting_cachedelete">Delete Cache</string>
     <string name="setttng_autodelcache">Delete Cache when exits App</string>
     <string name="title_help">Help</string>
-    <string name="agreement">Agreements</string>
+    <string name="agreement">Agreements and Polices</string>
     <string name="mfmagreelink">https://latios.pbdiary.pw/maeari/misodiary/privacypolicy_en.html</string>
     <string name="noInternetConnection">No Internet Connection</string>
     <string name="loginSetting">Login Settings</string>
