@@ -1,0 +1,34 @@
+<Shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="noti"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/title_noti">
+        <intent android:action="action.intent.action.VIEW"
+            android:data="uri"
+            android:targetPackage="pw.pbdiary.maeari.misodiary"
+            android:targetClass="pw.pbdiary.maeari.misodiary.NotiActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="opench"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/title_opench">
+        <intent android:action="action.intent.action.VIEW"
+            android:data="uri"
+            android:targetPackage="pw.pbdiary.maeari.misodiary"
+            android:targetClass="pw.pbdiary.maeari.misodiary.MainActivity">
+            <extra android:name="opench" android:value="opench" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="profile"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/title_profile">
+        <intent android:action="action.intent.action.VIEW"
+            android:data="uri"
+            android:targetPackage="pw.pbdiary.maeari.misodiary"
+            android:targetClass="pw.pbdiary.maeari.misodiary.MainActivity">
+            <extra android:name="status" android:value="profile" />
+        </intent>
+    </shortcut>
+
+</Shortcuts>

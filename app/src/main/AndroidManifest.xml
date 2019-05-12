@@ -143,7 +143,9 @@
             <meta-data
                 android:name="android.webkit.WebView.EnableSafeBrowsing"
                 android:value="true" />
-
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
