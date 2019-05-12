@@ -2,7 +2,6 @@ package pw.pbdiary.maeari.misodiary;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -31,6 +30,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                                     temp[x].delete();
                                 }
                             }
+                            Snackbar.make(getActivity().findViewById(android.R.id.content),getResources().getString(R.string.string_cache_deleted),Snackbar.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
                         Log.e("Cache", "failed cache clean");

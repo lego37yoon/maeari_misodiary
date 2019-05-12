@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         SharedPreferences autofillsupport = PreferenceManager.getDefaultSharedPreferences(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && autofillsupport.getBoolean("autofill",false)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Objects.equals(autofillsupport.getString("autofill", "false"), "true")) {
             mIDField.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
             mPWField.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
         }
@@ -328,5 +328,27 @@ public class LoginActivity extends AppCompatActivity {
             misoLogin.performClick();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onStop() {
+        hideKey(this);
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onPause() {
+        hideKey(this);
+        super.onPause();
+    }
+
+    public void hideKey (Activity activity) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 }
