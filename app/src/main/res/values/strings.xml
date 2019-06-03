@@ -88,4 +88,8 @@
     <string name="loginAutofillOption">AutoFill Support(BETA)</string>
     <string name="error_failed_del_cache">Failed to delete cache</string>
     <string name="string_cache_deleted">Deleted</string>
+    <string name="string_darkmode_title">Dark Mode Setting</string>
+    <string name="setting_darkmode_light">Light</string>
+    <string name="setting_darkmode_dark">Dark</string>
+    <string name="setting_darkmode_bs">Set by Battery Saver</string>
 </resources>

@@ -1,6 +1,7 @@
 <Shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:shortcutId="noti"
+        android:icon="@drawable/ic_noti_12px"
         android:enabled="true"
         android:shortcutShortLabel="@string/title_noti">
         <intent android:action="action.intent.action.VIEW"
@@ -10,18 +11,20 @@
     </shortcut>
     <shortcut
         android:shortcutId="opench"
+        android:icon="@drawable/ic_dash_12px"
         android:enabled="true"
         android:shortcutShortLabel="@string/title_opench">
         <intent android:action="action.intent.action.VIEW"
             android:data="uri"
             android:targetPackage="pw.pbdiary.maeari.misodiary"
             android:targetClass="pw.pbdiary.maeari.misodiary.MainActivity">
-            <extra android:name="opench" android:value="opench" />
+            <extra android:name="status" android:value="opench" />
         </intent>
     </shortcut>
     <shortcut
         android:shortcutId="profile"
         android:enabled="true"
+        android:icon="@drawable/ic_person_12px"
         android:shortcutShortLabel="@string/title_profile">
         <intent android:action="action.intent.action.VIEW"
             android:data="uri"

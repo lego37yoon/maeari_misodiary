@@ -27,6 +27,12 @@
             android:entryValues="@array/array_prefsc"
             android:defaultValue="opench"
             android:title="@string/setting_mainsc" />
+        <ListPreference
+            android:key="darkModeSet"
+            android:entries="@array/array_darkmode"
+            android:entryValues="@array/array_darkmode_internal"
+            android:defaultValue="bs"
+            android:title="@string/string_darkmode_title" />
         <Preference
             android:title="@string/setting_cachedelete"
             android:key="deleteCache"/>

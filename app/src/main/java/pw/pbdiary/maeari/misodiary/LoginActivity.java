@@ -19,6 +19,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.autofill.AutofillManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
@@ -60,6 +61,14 @@ public class LoginActivity extends AppCompatActivity {
         TextInputEditText mPWField = findViewById(R.id.misoPWField);
         mPWField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         mPWField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        SharedPreferences autofillsupport = PreferenceManager.getDefaultSharedPreferences(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Objects.equals(autofillsupport.getBoolean("autofill", false), true)) {
+            Log.d("INFO","AUTOFILL ENABLED");
+            mIDField.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
+            mPWField.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
+        } else {
+            Log.d("INFO","AUTOFILL DISABLED");
+        }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         mPWField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -72,11 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        SharedPreferences autofillsupport = PreferenceManager.getDefaultSharedPreferences(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Objects.equals(autofillsupport.getString("autofill", "false"), "true")) {
-            mIDField.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
-            mPWField.setAutofillHints(View.AUTOFILL_HINT_PASSWORD);
-        }
     }
     public void onFindIDPWClicked(View view) {
         misoCustomTab c = new misoCustomTab();
