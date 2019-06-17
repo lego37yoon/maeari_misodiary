@@ -12,14 +12,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBarLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:background="#FAFAFA"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="#FAFAFA">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -29,10 +30,11 @@
                         android:id="@+id/title_main"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginStart="16dp"
                         android:text="@string/title_home"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -59,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/appBarLayout3">
 
@@ -94,18 +97,19 @@
                 android:contentDescription="@string/menu_description_myaccount"
                 android:onClick="onMyAccountClicked"
                 app:srcCompat="@drawable/ic_build_black_24dp" />
-
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/newArticle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit_white_24dp"
+            android:contentDescription="@string/btn_write"
             android:onClick="onProfileClicked"
-            app:layout_anchor="@id/navigation"
+            android:src="@drawable/ic_edit_white_24dp"
+            android:tint="@android:color/white"
+            android:backgroundTint="@color/colorPrimaryDark"
             app:fabSize="normal"
-            android:contentDescription="@string/btn_write"/>
+            app:layout_anchor="@id/navigation" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

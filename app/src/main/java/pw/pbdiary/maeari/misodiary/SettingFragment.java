@@ -3,6 +3,8 @@ package pw.pbdiary.maeari.misodiary;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -37,6 +39,23 @@ public class SettingFragment extends PreferenceFragmentCompat {
                     }
                 } else {
                     Snackbar.make(getActivity().findViewById(android.R.id.content),getResources().getString(R.string.error_failed_del_cache),Snackbar.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
+        ListPreference dmSet = (ListPreference) findPreference("darkModeSet");
+        dmSet.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                switch (newValue.toString()) {
+                    case "Light":
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+                    case "Dark":
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                    default:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
                 }
                 return false;
             }

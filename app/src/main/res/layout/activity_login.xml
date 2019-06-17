@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:id="@+id/loginLayout">
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/loginAppBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:elevation="0dp"
@@ -54,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/misoid"
-        android:visibility="visible"
+        android:visibility="gone"
         app:boxStrokeColor="@color/colorPrimary"
         app:counterMaxLength="16"
         app:errorEnabled="true">
@@ -75,7 +76,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/misopw"
-        android:visibility="visible"
+        android:visibility="gone"
         app:boxStrokeColor="@color/colorPrimary"
         app:counterMaxLength="18"
         app:errorEnabled="true"
@@ -85,7 +86,7 @@
             android:id="@+id/misoPWField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
@@ -107,7 +108,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorPrimary"
-        android:visibility="visible"
+        android:visibility="gone"
         android:text="@string/login_btn"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
         android:textSize="16sp"
@@ -121,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:onClick="onFindIDPWClicked"
         android:text="@string/misofindidpw"
         android:textAlignment="textEnd"
@@ -135,7 +136,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:onClick="onRegisterClicked"
-        android:visibility="visible"
+        android:visibility="gone"
         android:text="@string/misoRegister"
         android:textAlignment="textEnd"
         android:textColor="@android:color/darker_gray" />
@@ -144,7 +145,7 @@
         android:id="@+id/logintoggle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/misoPrevious"
@@ -165,7 +166,7 @@
         android:id="@+id/previousLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <WebView

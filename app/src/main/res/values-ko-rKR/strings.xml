@@ -3,11 +3,11 @@
     <string name="app_name">메아리 for 미소일기</string>
     <string name="title_home">오픈채널</string>
     <string name="navtitle_opench">오픈채널</string>
-    <string name="navtitle_michinrandom">미친랜덤</string>
-    <string name="navtitle_profile">내 프로필</string>
+    <string name="navtitle_michinrandom">친구찾기</string>
+    <string name="navtitle_profile">일상</string>
     <string name="title_opench">오픈채널</string>
-    <string name="title_michinrandom">미친랜덤</string>
-    <string name="title_profile">내 프로필</string>
+    <string name="title_michinrandom">친구찾기</string>
+    <string name="title_profile">일상</string>
     <string name="menu_description_search">검색</string>
     <string name="menu_description_noti">알림</string>
     <string name="menu_description_myaccount">내 계정</string>

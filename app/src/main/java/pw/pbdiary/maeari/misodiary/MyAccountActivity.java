@@ -44,7 +44,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
         mWebView = (WebView) findViewById(R.id.myaccount_webview);
         mWebView.setWebViewClient(new misoWeb4());
-        mWebView.loadUrl("https://www.misodiary.net/member/setting");
+        mWebView.loadUrl("http://www.misodiary.net/mypage");
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onCloseWindow(WebView w) {
@@ -154,7 +154,7 @@ public class MyAccountActivity extends AppCompatActivity {
             if (data.getStringExtra("cookie") != null) {
                 CookieManager cM = CookieManager.getInstance();
                 cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
-                mWebView.loadUrl("https://www.misodiary.net/member/setting");
+                mWebView.loadUrl("http://www.misodiary.net/mypage");
             } else {
                 finish();
             }
@@ -191,7 +191,7 @@ public class MyAccountActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if (url.startsWith("https://www.misodiary.net/main")) {
+            if (url.startsWith("http://www.misodiary.net/main")) {
                 if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);

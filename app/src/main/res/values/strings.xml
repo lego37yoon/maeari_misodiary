@@ -2,11 +2,11 @@
     <string name="app_name">maeari for misodiary</string>
     <string name="title_home">OPEN CHANNEL</string>
     <string name="navtitle_opench">OPENCH.</string>
-    <string name="navtitle_michinrandom">MICHINRANDOM</string>
-    <string name="navtitle_profile">MY PROFILE</string>
+    <string name="navtitle_michinrandom">FIND FRIENDS</string>
+    <string name="navtitle_profile">DAYTIME</string>
     <string name="title_opench">OPENCH.</string>
-    <string name="title_michinrandom">MICHINRANDOM</string>
-    <string name="title_profile">MY PROFILE</string>
+    <string name="title_michinrandom">FIND FRIENDS</string>
+    <string name="title_profile">DAYTIME</string>
     <string name="menu_description_search">Search</string>
     <string name="menu_description_noti">Notifications</string>
     <string name="menu_description_myaccount">My Account</string>

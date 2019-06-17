@@ -137,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mWebView.loadUrl("https://www.misodiary.net/post/search/"+query);
+                mWebView.loadUrl("http://www.misodiary.net/search?skeyword="+query);
                 return false;
             }
 
@@ -156,7 +156,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             mSearchView.setQuery(queryToString, false);
             mSearchView.clearFocus();
-            mWebView.loadUrl("https://www.misodiary.net/post/search/" + queryToString);
+            mWebView.loadUrl("http://www.misodiary.net/search?skeyword=" + queryToString);
         }
         SwipeRefreshLayout pullrefresh = findViewById(R.id.searchRefresher);
         pullrefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
@@ -182,13 +182,20 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if (url.startsWith("https://www.misodiary.net/main")) {
-                if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
+            if (url.startsWith("http://www.misodiary.net/board")) {
+                /* if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);
                     String status = "opench";
                     intent.putExtra("status",status);
-                } else if (url.startsWith("https://www.misodiary.net/main/random_friends")) {
+                } */
+                if (url.startsWith("http://www.misodiary.net/board/me2day")||url.startsWith("http://www.misodiary.net/board/eatmetoo")) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("openKeyword", url);
+                    String status = "opench";
+                    intent.putExtra("status",status);
+                }
+                else if (url.startsWith("http://www.misodiary.net/board/findfriend")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "michinrandom";
                     i.putExtra("status",status);
@@ -197,12 +204,12 @@ public class SearchActivity extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
-            } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+            } else if(url.startsWith("http://www.misodiary.net/board/daytime")) {
                 Intent i = new Intent(getApplicationContext(),MainActivity.class);
                 String status = "profile";
                 i.putExtra("status",status);
                 startActivity(i);
-            } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+            } else if(url.startsWith("http://www.misodiary.net/notification")) {
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net/member/setting")) {

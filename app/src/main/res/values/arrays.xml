@@ -10,12 +10,12 @@
         <item>michinrandom</item>
         <item>profile</item>
     </string-array>
-    <string-array name="array_darkmode">
+    <!-- <string-array name="array_darkmode">
         <item>@string/setting_darkmode_light</item>
         <item>@string/setting_darkmode_dark</item>
         <item>@string/setting_darkmode_bs</item>
-    </string-array>
-    <string-array name="array_darmode_internal">
+    </string-array> -->
+    <string-array name="array_darkmode_internal">
         <item>light</item>
         <item>dark</item>
         <item>bs</item>

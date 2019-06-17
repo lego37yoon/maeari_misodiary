@@ -177,15 +177,15 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             switch (status) {
                 case "opench":
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    mWebView.loadUrl("http://www.misodiary.net/");
                     break;
                 case "michinrandom":
                     mTextMessage.setText(R.string.title_michinrandom);
-                    mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                    mWebView.loadUrl("http://www.misodiary.net/board/findfriend");
                     break;
                 case "profile":
                     mTextMessage.setText(R.string.title_profile);
-                    mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                    mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                     break;
             }
         } else {
@@ -197,23 +197,23 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     editor.putString("status","opench");
                     editor.apply();
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    mWebView.loadUrl("http://www.misodiary.net");
                     break;
                 case "michinrandom":
                     editor.putString("status","michinrandom");
                     editor.apply();
                     mTextMessage.setText(R.string.title_michinrandom);
-                    mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                    mWebView.loadUrl("http://www.misodiary.net/board/findfriend");
                     break;
                 case "profile":
                     editor.putString("status","profile");
                     editor.apply();
                     mTextMessage.setText(R.string.title_profile);
-                    mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                    mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                     break;
                 default:
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("https://www.misodiary.net/main/opench");
+                    mWebView.loadUrl("http://www.misodiary.net");
                     break;
             }
         }
@@ -274,31 +274,31 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if(url.startsWith("https://www.misodiary.net/member/notification")) {
+            if(url.startsWith("http://www.misodiary.net/notification")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+            } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                String keyword = url.replace("https://www.misodiary.net/post/search/","");
+                String keyword = url.replace("http://www.misodiary.net/search?skeyword=","");
                 intent.putExtra("keyword",keyword);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+            } else if(url.startsWith("http://www.misodiary.net/post")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+                String postNumber = url.replace("http://www.misodiary.net/post/","");
                 intent.putExtra("postNumber",postNumber);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+            } else if(url.startsWith("http://www.misodiary.net/profile/")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("https://www.misodiary.net/home/main/","");
+                String accountID = url.replace("http://www.misodiary.net/profile/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+            } else if(url.startsWith("http://www.misodiary.net/login?url=")) {
                 view.setVisibility(View.INVISIBLE);
-            } else if(url.startsWith("https://www.misodiary.net")) {
+            } else if(url.startsWith("http://www.misodiary.net")) {
                 view.loadUrl(url);
             } else {
                 misoCustomTab c = new misoCustomTab();
@@ -309,29 +309,33 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            if(url.startsWith("https://www.misodiary.net/main/opench")) {
-                mTextMessage.setText(R.string.title_opench);
-                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = statusSave.edit();
-                editor.putString("status","opench");
-                editor.apply();
-            } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+            if(url.startsWith("http://www.misodiary.net/board/findfriend")) {
                 mTextMessage.setText(R.string.title_michinrandom);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","michinrandom");
                 editor.apply();
-            } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+            } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+                mTextMessage.setText(R.string.title_opench);
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","opench");
+                editor.apply();
+            } else if(url.startsWith("http://www.misodiary.net/board/daytime")) {
                 mTextMessage.setText(R.string.title_profile);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","profile");
                 editor.apply();
-            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
-                SharedPreferences statusRequest = getSharedPreferences("status",Context.MODE_PRIVATE);
+            } else if(url.startsWith("http://www.misodiary.net/board")) {
+                mTextMessage.setText(R.string.title_opench);
+                SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = statusSave.edit();
+                editor.putString("status","opench");
+                editor.apply();
+            } else if(url.startsWith("http://www.misodiary.net/login?url=")) {
                 Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
-                loginIntent.putExtra("status",statusRequest.getString("status","opench"));
-                startActivityForResult(loginIntent,LOGIN_REQUEST_CODE_MAIN);
+                loginIntent.putExtra("status",url.replace("http://www.misodiary.net/login?url=",""));
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
                 if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
                     mTextMessage.setText(R.string.title_opench);
@@ -420,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         SharedPreferences.Editor editor2 = forProfileOnly.edit();
         editor2.putString("ifP","true");
         editor2.apply();
-        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+        mWebView.loadUrl("http://www.misodiary.net/board/daytime");
 
     }
 
@@ -468,32 +472,32 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                             mTextMessage.setText(R.string.title_opench);
                             if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")|| Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                                 mTextMessage.setText(R.string.title_profile);
-                                mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                                mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                                 SharedPreferences.Editor editor = forProfile.edit();
                                 editor.putString("ifP","false");
                                 editor.apply();
                             } else {
-                                mWebView.loadUrl("https://www.misodiary.net/");
+                                mWebView.loadUrl("http://www.misodiary.net/");
                             }
                             break;
                         case "michinrandom":
                             mTextMessage.setText(R.string.title_michinrandom);
-                            mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                            mWebView.loadUrl("http://www.misodiary.net/board/findfriends");
                             break;
                         case "profile":
                             mTextMessage.setText(R.string.title_profile);
-                            mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                            mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                             break;
                     }
                 } else {
                     if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile") || Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                         mTextMessage.setText(R.string.title_profile);
-                        mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                        mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                         SharedPreferences.Editor editor = forProfile.edit();
                         editor.putString("ifP","false");
                         editor.apply();
                     } else {
-                        mWebView.loadUrl("https://www.misodiary.net/");
+                        mWebView.loadUrl("http://www.misodiary.net/");
                     }
                 }
             }
@@ -550,28 +554,30 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         String url = mWebView.getOriginalUrl();
         WebBackForwardList currentHistory = mWebView.copyBackForwardList();
         WebHistoryItem prevURL = currentHistory.getItemAtIndex(currentHistory.getCurrentIndex()-1);
-        if(url.startsWith("https://www.misodiary.net/main/opench")) {
+        if(url.startsWith("http://www.misodiary.net/main/opench")) {
             mTextMessage.setText(R.string.title_opench);
-        } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+        } else if(url.startsWith("https://www.misodiary.net/board/findfriends")) {
             mTextMessage.setText(R.string.title_michinrandom);
-        } else if(url.startsWith("https://www.misodiary.net/home/dashboard")) {
+        } else if(url.startsWith("https://www.misodiary.net/board/daytime")) {
             mTextMessage.setText(R.string.title_profile);
-        } else if(url.startsWith("https://www.misodiary.net/member/notification")) {
+        } else if(url.startsWith("http://www.misodiary.net/board")) {
+            mTextMessage.setText(getResources().getString(R.string.title_opench));
+        } else if(url.startsWith("http://www.misodiary.net/notification")) {
             Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
             startActivity(intent);
-        } else if(url.startsWith("https://www.misodiary.net/post/search/")) {
+        } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
             Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-            String keyword = url.replace("https://www.misodiary.net/post/search/","");
+            String keyword = url.replace("http://www.misodiary.net/search?skeyword=","");
             intent.putExtra("keyword",keyword);
             startActivity(intent);
-        } else if(url.startsWith("https://www.misodiary.net/post/single")) {
+        } else if(url.startsWith("https://www.misodiary.net/post")) {
             Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-            String postNumber = url.replace("https://www.misodiary.net/post/single/","");
+            String postNumber = url.replace("https://www.misodiary.net/post/","");
             intent.putExtra("postNumber",postNumber);
             startActivity(intent);
-        } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+        } else if(url.startsWith("http://www.misodiary.net/profile")) {
             Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-            String accountID = url.replace("https://www.misodiary.net/home/main/","");
+            String accountID = url.replace("http://www.misodiary.net/profile/","");
             intent.putExtra("accountID",accountID);
             startActivity(intent);
         } /* else if(url.startsWith("https://www.misodiary.net/member/login")) {
