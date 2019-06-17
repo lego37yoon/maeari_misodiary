@@ -55,7 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         misoLogin = findViewById(R.id.misoLogin);
         mWebView = findViewById(R.id.loginWebView);
         mWebView.setWebViewClient(new loginweb());
-        mWebView.loadUrl("https://www.misodiary.net/member/login");
+
+        mWebView.loadUrl("http://www.misodiary.net/login");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         TextInputEditText mIDField = findViewById(R.id.misoIDField);
@@ -293,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
             CookieManager cM = CookieManager.getInstance();
-            if (!url.startsWith("https://www.misodiary.net/member")) {
+            if (!url.startsWith("http://www.misodiary.net/login?=")) {
                 SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
                 String cookieEn = cM.getCookie("www.misodiary.net");
                 SharedPreferences.Editor editor = cookie.edit();

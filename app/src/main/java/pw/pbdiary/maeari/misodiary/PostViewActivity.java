@@ -49,7 +49,7 @@ public class PostViewActivity extends AppCompatActivity {
 
         mWebView = (WebView) findViewById(R.id.postviewWebview);
         String postNumber = getIntent().getStringExtra("postNumber");
-        mWebView.loadUrl("https://www.misodiary.net/post/single/"+postNumber);
+        mWebView.loadUrl("http://www.misodiary.net/post/"+postNumber);
 
         mWebView.setWebViewClient(new misoWeb4());
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -153,45 +153,45 @@ public class PostViewActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if (url.startsWith("https://www.misodiary.net/main")) {
-                if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("openKeyword", url);
-                    String status = "opench";
-                    intent.putExtra("status", status);
-                } else if (url.startsWith("https://www.misodiary.net/main/random_friends")) {
+            if (url.startsWith("http://www.misodiary.net/board")) {
+                if (url.startsWith("http://www.misodiary.net/board/findfriends")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "michinrandom";
                     i.putExtra("status", status);
                     startActivity(i);
+                } else if (url.startsWith("https://www.misodiary.net/board/daytime")) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    String status = "profile";
+                    i.putExtra("status", status);
+                    startActivity(i);
+                } else if (url.startsWith("http://www.misodiary.net/board/")) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("openKeyword", url);
+                    String status = "opench";
+                    intent.putExtra("status", status);
                 } else {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
-            } else if (url.startsWith("https://www.misodiary.net/home/dashboard")) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                String status = "profile";
-                i.putExtra("status", status);
-                startActivity(i);
-            } else if (url.startsWith("https://www.misodiary.net/member/notification")) {
+            } else if (url.startsWith("http://www.misodiary.net/notification")) {
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
-            } else if (url.startsWith("https://www.misodiary.net/member/setting")) {
+            } else if (url.startsWith("http://www.misodiary.net/mypage")) {
                 Intent i = new Intent(getApplicationContext(), MyAccountActivity.class);
                 startActivity(i);
-            } else if (url.startsWith("https://www.misodiary.net/post/search")) {
+            } else if (url.startsWith("http://www.misodiary.net/search?skeyword=")) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                String keyword = url.replace("https://www.misodiary.net/post/search/", "");
+                String keyword = url.replace("http://www.misodiary.net/search?skeyword=", "");
                 intent.putExtra("keyword", keyword);
                 startActivity(intent);
-            } else if (url.startsWith("https://www.misodiary.net/post/single")) {
+            } else if (url.startsWith("http://www.misodiary.net/post")) {
                 mWebView.loadUrl(url);
-            } else if(url.startsWith("https://www.misodiary.net/home/main")) {
+            } else if(url.startsWith("http://www.misodiary.net/profile")) {
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("https://www.misodiary.net/home/main/","");
+                String accountID = url.replace("http://www.misodiary.net/profile","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("https://www.misodiary.net/member/login")) {
+            } else if(url.startsWith("http://www.misodiary.net/login")) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){

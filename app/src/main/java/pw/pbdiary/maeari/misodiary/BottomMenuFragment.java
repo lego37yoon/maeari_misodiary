@@ -35,7 +35,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         MainActivity mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
                         mA.mTextMessage = Objects.requireNonNull(getActivity()).findViewById(R.id.title_main);
-                        mA.mWebView.loadUrl("https://www.misodiary.net/main/random_friends");
+                        mA.mWebView.loadUrl("http://www.misodiary.net/board/findfriends");
                         mA.mTextMessage.setText(getResources().getString(R.string.title_michinrandom));
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
@@ -44,7 +44,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
                         mA.mTextMessage = Objects.requireNonNull(getActivity()).findViewById(R.id.title_main);
-                        mA.mWebView.loadUrl("https://www.misodiary.net");
+                        mA.mWebView.loadUrl("http://www.misodiary.net");
                         mA.mTextMessage.setText(getResources().getString(R.string.title_opench));
                         fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
@@ -61,7 +61,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
                         mA.mTextMessage = Objects.requireNonNull(getActivity()).findViewById(R.id.title_main);
-                        mA.mWebView.loadUrl("https://www.misodiary.net/home/dashboard");
+                        mA.mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                         mA.mTextMessage.setText(getResources().getString(R.string.title_profile));
                         fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();

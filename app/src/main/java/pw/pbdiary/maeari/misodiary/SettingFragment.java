@@ -43,7 +43,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                 return false;
             }
         });
-        ListPreference dmSet = (ListPreference) findPreference("darkModeSet");
+        /* ListPreference dmSet = (ListPreference) findPreference("darkModeSet");
         dmSet.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -59,7 +59,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                 }
                 return false;
             }
-        });
+        }); */
     }
 
 }

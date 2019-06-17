@@ -14,7 +14,7 @@
     <string name="menu_description_appinfo">앱 정보</string>
     <string name="title_appinfo">메아리 for 미소일기는…</string>
     <string name="app_logo">앱 로고</string>
-    <string name="version_string"> \"Brooklyn\"</string>
+    <string name="version_string">Cleanboot</string>
     <string name="app_info_notice">이 앱은 오픈소스 소프트웨어를 사용하고 있습니다. 사용하는 소프트웨어의 라이선스에 대해서는 아래 링크를 참고해주세요.</string>
     <string name="app_info_notice2">이 앱에는 우아한 형제들이 배포한 배달의 민족 한나체 Air가 적용되었습니다.</string>
     <string name="string_osc">오픈소스 라이선스</string>
