@@ -30,7 +30,7 @@ public class NotiActivity extends AppCompatActivity {
         mWebView = (WebView) findViewById(R.id.notiWebView);
         mWebView.setWebViewClient(new misoWeb3());
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://www.misodiary.net/member/notification");
+        mWebView.loadUrl("http://www.misodiary.net/notification");
         SwipeRefreshLayout pullrefresh = findViewById(R.id.notiRefresher);
         pullrefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
         pullrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -45,17 +45,17 @@ public class NotiActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
             if (url.startsWith("http://www.misodiary.net/board")) {
-                if (url.startsWith("https://www.misodiary.net/board/daytime")) {
+                if (url.startsWith("http://www.misodiary.net/board/daytime")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "profile";
                     i.putExtra("status",status);
                     startActivity(i);
-                } else if (url.startsWith("https://www.misodiary.net/findfriends")) {
+                } else if (url.startsWith("http://www.misodiary.net/findfriend")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "michinrandom";
                     i.putExtra("status",status);
                     startActivity(i);
-                } else if (url.startsWith("https://www.misodiary.net/board")) {
+                } else if (url.startsWith("http://www.misodiary.net/board")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);
                 } else {

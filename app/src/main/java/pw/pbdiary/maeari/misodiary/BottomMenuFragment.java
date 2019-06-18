@@ -35,7 +35,7 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                         MainActivity mA = new MainActivity();
                         mA.mWebView = Objects.requireNonNull(getActivity()).findViewById(R.id.webView);
                         mA.mTextMessage = Objects.requireNonNull(getActivity()).findViewById(R.id.title_main);
-                        mA.mWebView.loadUrl("http://www.misodiary.net/board/findfriends");
+                        mA.mWebView.loadUrl("http://www.misodiary.net/board/findfriend");
                         mA.mTextMessage.setText(getResources().getString(R.string.title_michinrandom));
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         fm.beginTransaction().remove(BottomMenuFragment.this).commit();
