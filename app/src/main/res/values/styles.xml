@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,7 +12,7 @@
         <item name="android:statusBarColor">#FAFAFA</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
     </style>
-    <style name="AppTheme.login" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.login" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -32,7 +32,7 @@
     </style>
 
 
-    <style name="anotherTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="anotherTheme2" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -41,7 +41,7 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
     </style>
-    <style name="anotherTheme3" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="anotherTheme3" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -51,11 +51,11 @@
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppTheme.ActionBar</item>
     </style>
-    <style name="ThemeOverlay.AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="ThemeOverlay.AppTheme.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
-    <style name="searchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="searchTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

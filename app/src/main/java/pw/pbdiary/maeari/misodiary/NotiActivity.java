@@ -12,10 +12,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -28,8 +31,29 @@ public class NotiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_noti);
         mWebView = (WebView) findViewById(R.id.notiWebView);
-        mWebView.setWebViewClient(new misoWeb3());
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onCloseWindow(WebView w) {
+                super.onCloseWindow(w);
+                finish();
+            }
+
+            @Override
+            public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, Message resultMsg) {
+                final WebSettings settings = view.getSettings();
+                settings.setDomStorageEnabled(true);
+                settings.setJavaScriptEnabled(true);
+                settings.setAllowFileAccess(true);
+                settings.setAllowContentAccess(true);
+                view.setWebChromeClient(this);
+                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(view);
+                resultMsg.sendToTarget();
+                return false;
+            }
+        });
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new misoWeb3());
         mWebView.loadUrl("http://www.misodiary.net/notification");
         SwipeRefreshLayout pullrefresh = findViewById(R.id.notiRefresher);
         pullrefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
@@ -94,7 +118,7 @@ public class NotiActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -162,5 +186,11 @@ public class NotiActivity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWebView.loadUrl("http://www.misodiary.net/notification");
     }
 }

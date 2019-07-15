@@ -208,7 +208,7 @@ public class PostViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            return true;
+            return false;
         }
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -312,5 +312,11 @@ public class PostViewActivity extends AppCompatActivity {
 
     public void onBackButtonPressed(View v){
         onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWebView.goBack();
     }
 }

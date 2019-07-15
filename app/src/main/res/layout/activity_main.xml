@@ -101,14 +101,15 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/newArticle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/btn_write"
             android:onClick="onProfileClicked"
-            android:src="@drawable/ic_edit_white_24dp"
-            android:tint="@android:color/white"
-            android:backgroundTint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_edit_white_24dp"
+            app:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:fabSize="normal"
             app:layout_anchor="@id/navigation" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

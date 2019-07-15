@@ -215,8 +215,8 @@ public class SearchActivity extends AppCompatActivity {
             } else if(url.startsWith("http://www.misodiary.net/mypage")) {
                 Intent i = new Intent(getApplicationContext(), MyAccountActivity.class);
                 startActivity(i);
-            } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
-                String keywordInternal = url.replace("http://www.misodiary.net/search?skeyword=","");
+            } else if(url.startsWith("http://www.misodiary.net/search?")) {
+                /*String keywordInternal = url.replace("http://www.misodiary.net/search?skeyword=","");
                 String keywordReadable = null;
                 try {
                     keywordReadable = URLDecoder.decode(keywordInternal,"UTF-8");
@@ -224,7 +224,7 @@ public class SearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 mSearchView.setQuery(keywordReadable,false);
-                mSearchView.clearFocus();
+                mSearchView.clearFocus(); */
                 mWebView.loadUrl(url);
             } else if(url.startsWith("http://www.misodiary.net/post")) {
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
