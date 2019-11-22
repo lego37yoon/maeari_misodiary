@@ -48,7 +48,7 @@
     <string name="error_back">Press Back Button Once Again to exit App.</string>
     <string name="login_title">Login to misodiary</string>
     <string name="login_btn">Login</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Login or Logout</string>
     <string name="misoid">ID</string>
     <string name="misopw">Password</string>
     <string name="misoautologin">Auto Login</string>
