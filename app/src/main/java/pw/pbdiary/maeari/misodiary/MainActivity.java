@@ -7,19 +7,15 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +31,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -53,10 +46,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 public class MainActivity extends AppCompatActivity implements OnKeyboardVisibilityListener{
 
@@ -242,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
 
         //키보드 올라올 때 앱 바 가리기
         setKeyboardVisibilityListener(this);
-        new logInOutCheck(MainActivity.this).execute();
     }
 
     private void setKeyboardVisibilityListener(final OnKeyboardVisibilityListener onKeyboardVisibilityListener) {
@@ -608,46 +596,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             }catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private static class logInOutCheck extends AsyncTask<Void,Void,String> {
-        private Elements elementone;
-        private WeakReference<MainActivity> activityReference;
-        private String loginStatus;
-        private Menu menu;
-
-        logInOutCheck(MainActivity context) {
-            activityReference = new WeakReference<>(context);
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            try{
-                Document doc = Jsoup.connect("http://www.misodiary.net/").get();
-                elementone = doc.select("i[class=fa fa-signout]").eq(0);
-                if(elementone == null) {
-                    elementone = doc.select("i[class=fa fa-signin]").eq(0);
-                    loginStatus = activityReference.get().getResources().getString(R.string.login_btn);
-                } else {
-                    loginStatus = activityReference.get().getResources().getString(R.string.logout);
-                }
-            } catch (UnknownHostException e) {
-                Looper.prepare();
-                Toast.makeText(activityReference.get().getApplicationContext(),activityReference.get().getResources().getString(R.string.noInternetConnection),Toast.LENGTH_LONG).show();
-                Looper.loop();
-                e.printStackTrace();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            MainActivity activity = activityReference.get();
-            if (activity == null || activity.isFinishing()) return;
-            MenuItem logInOut = menu.findItem(R.id.nav_logout);
-            logInOut.setTitle(loginStatus);
         }
     }
 }
