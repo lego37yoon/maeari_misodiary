@@ -78,11 +78,6 @@ public class BottomMenuFragment extends BottomSheetDialogFragment {
                     mA.mWebView.reload();
                     fm = getActivity().getSupportFragmentManager();
                     fm.beginTransaction().remove(BottomMenuFragment.this).commit();
-                    logInOut = menu.findItem(R.id.nav_logout);
-                    if(logInOut.getTitle().equals(getResources().getString(R.string.login_btn))) {
-                        Intent i = new Intent(getContext(), LoginActivity.class);
-                        startActivity(i);
-                    }
                     break;
             }
             return true;
