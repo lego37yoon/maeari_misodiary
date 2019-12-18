@@ -28,6 +28,7 @@ public class PermissionCheckInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_permission_check_info);
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
     }
 
     public void onStartMainClicked(View v) {

@@ -14,7 +14,7 @@
     <string name="menu_description_appinfo">앱 정보</string>
     <string name="title_appinfo">메아리 for 미소일기는…</string>
     <string name="app_logo">앱 로고</string>
-    <string name="version_string">Cleanboot</string>
+    <string name="version_string">Cleanboot+</string>
     <string name="app_info_notice">이 앱은 오픈소스 소프트웨어를 사용하고 있습니다. 사용하는 소프트웨어의 라이선스에 대해서는 아래 링크를 참고해주세요.</string>
     <string name="app_info_notice2">이 앱에는 우아한 형제들이 배포한 배달의 민족 한나체 Air가 적용되었습니다.</string>
     <string name="string_osc">오픈소스 라이선스</string>
@@ -35,7 +35,7 @@
     <string name="requestPermissionItem2">카메라</string>
     <string name="requestPermissionItem2Desc">사진을 찍기 위해 사용합니다.</string>
     <string name="start_button">시작하기</string>
-    <string name="requestPermissionDesc">권한을 거부하신 후에는 앱 정보 - 권한 창에서 동의하실 수 있습니다. \n두 권한 중 하나라도 동의하지 않을 경우 사진 찍기 기능이 제대로 동작하지 않거나 앱이 종료될 수 있습니다.</string>
+    <string name="requestPermissionDesc">권한을 거부하신 후에는 앱 설정 - 권한 창에서 동의하실 수 있습니다. \n두 권한 중 하나라도 동의하지 않을 경우 사진 찍기 기능이 제대로 동작하지 않거나 앱이 종료될 수 있습니다.</string>
     <string name="error2">검색 결과를 불러오는 데 실패하였습니다.</string>
     <string name="title_profileview">프로필 보기</string>
     <string name="notification_error_ssl_cert_invalid">SSL 오류</string>

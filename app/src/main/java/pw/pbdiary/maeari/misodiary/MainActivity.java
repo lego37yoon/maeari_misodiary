@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                 mWebView.reload();
             }
         });
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
 
         //키보드 올라올 때 앱 바 가리기
         setKeyboardVisibilityListener(this);

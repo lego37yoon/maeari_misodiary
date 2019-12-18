@@ -13,7 +13,7 @@
     <string name="menu_description_appinfo">About this app</string>
     <string name="title_appinfo">About</string>
     <string name="app_logo">App Logo</string>
-    <string name="version_string">Cleanboot</string>
+    <string name="version_string">Cleanboot+</string>
     <string name="app_info_notice">This Application uses open-source software. You can see license informations from below link.</string>
     <string name="app_info_notice2">This Application uses HANNA Air fonts published by Wooahhan Brothers.</string>
     <string name="string_osc">OPEN SOURCE LICENSE</string>

@@ -7,8 +7,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
 
-        versionCode 126
-        versionName "1.2.3"
+        versionCode 129
+        versionName "1.2.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,14 +27,14 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.preference:preference:1.1.0'
-    implementation 'androidx.navigation:navigation-fragment:2.2.0-rc02'
-    implementation 'androidx.navigation:navigation-ui:2.2.0-rc02'
+    implementation 'androidx.navigation:navigation-fragment:2.2.0-rc03'
+    implementation 'androidx.navigation:navigation-ui:2.2.0-rc03'
     implementation 'com.google.android.material:material:1.2.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'org.jsoup:jsoup:1.12.1'
-    implementation 'androidx.browser:browser:1.2.0-beta01'
+    implementation 'androidx.browser:browser:1.2.0-rc01'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
