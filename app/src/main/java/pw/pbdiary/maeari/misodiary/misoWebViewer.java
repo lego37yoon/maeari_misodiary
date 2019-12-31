@@ -10,7 +10,6 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -22,13 +21,11 @@ import java.util.Locale;
 public class misoWebViewer {
     private static final String TYPE_IMAGE = "image/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
-    private static final int LOGIN_REQUEST_CODE_MAIN = 2;
-    private static final int FIRST_START_REQUEST_CODE = 3;
-    private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
 
-    public void set(AppCompatActivity activity,WebView mWebView, String code) {
+    public void set(AppCompatActivity activity,WebView mWebView) {
+
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setAllowContentAccess(true);
         mWebView.getSettings().setAllowFileAccess(true);

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
     public TextView mTextMessage;
     public WebView mWebView;
     //파일 업로드를 위한 변수
-    private static final String TYPE_IMAGE = "image/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private static final int LOGIN_REQUEST_CODE_MAIN = 2;
     private static final int FIRST_START_REQUEST_CODE = 3;
@@ -85,95 +84,18 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         }
         mTextMessage = (TextView) findViewById(R.id.title_main);
         mWebView = (WebView) findViewById(R.id.webView);
-        //DisplayMetrics dM = getResources().getDisplayMetrics();
-        //float dpHeight = dM.heightPixels / dM.density;
         mWebView.setWebViewClient(new misoWeb());
+        new misoWebViewer().set(this,mWebView);
+
+        //쿠키 불러오기
         SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         CookieManager cM = CookieManager.getInstance();
         if(cookie.getString("cookie","") != null) {
             Log.d("COOKIE",cookie.getString("cookie",""));
             cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
         }
-        //웹 뷰 설정
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setAllowContentAccess(true);
-        mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
-        //파일 업로드 기능 추가
-        mWebView.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onCloseWindow(WebView w) {
-                super.onCloseWindow(w);
-                finish();
-            }
 
-            @Override
-            public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, Message resultMsg) {
-                final WebSettings settings = view.getSettings();
-                settings.setDomStorageEnabled(true);
-                settings.setJavaScriptEnabled(true);
-                settings.setAllowFileAccess(true);
-                settings.setAllowContentAccess(true);
-                view.setWebChromeClient(this);
-                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
-                transport.setWebView(view);
-                resultMsg.sendToTarget();
-                return false;
-            }
-
-            public boolean onShowFileChooser(WebView webView,
-                                             ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                if (mFilePathCallback != null) {
-                    mFilePathCallback.onReceiveValue(null);
-                }
-                mFilePathCallback = filePathCallback;
-                imageChooser();
-                return true;
-            }
-
-            private void imageChooser() {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    // Create the File where the photo should go
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                        takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
-                    } catch (IOException ex) {
-                        // Error occurred while creating the File
-                        String error1 = getResources().getString(R.string.error1);
-                        Log.e(getClass().getName(), error1, ex);
-                    }
-
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                        mCameraPhotoPath = "file:"+photoFile.getAbsolutePath();
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                Uri.fromFile(photoFile));
-                    } else {
-                        takePictureIntent = null;
-                    }
-                }
-
-                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                contentSelectionIntent.setType(TYPE_IMAGE);
-
-                Intent[] intentArray;
-                if(takePictureIntent != null) {
-                    intentArray = new Intent[]{takePictureIntent};
-                } else {
-                    intentArray = new Intent[0];
-                }
-                String ImageCapture = getResources().getString(R.string.ImageCapture);
-                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-                chooserIntent.putExtra(Intent.EXTRA_TITLE, ImageCapture);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-
-                startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
-            }
-        });
+        //불러오는 페이지에 따라 글자 변경
         if(getIntent().getStringExtra("status") != null) {
             String status = getIntent().getStringExtra("status");
             switch (status) {
@@ -191,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     break;
             }
         } else {
+            //설정된 메인화면 값에 따라 화면 변경
             SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = statusSave.edit();
@@ -220,20 +143,19 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             }
         }
 
+        //Swipe To Refresh 적용
         SwipeRefreshLayout pullRefresh = findViewById(R.id.swipeMain);
         pullRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
-        pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mWebView.reload();
-            }
-        });
+        pullRefresh.setOnRefreshListener(() -> mWebView.reload());
+
+        //LG 기기에서 나타나는 색 미지정 오류 해결
         getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
 
         //키보드 올라올 때 앱 바 가리기
         setKeyboardVisibilityListener(this);
     }
 
+    //키보드 올라왔는지 여부에 따라 하단 바 숨길지 말지 결정
     private void setKeyboardVisibilityListener(final OnKeyboardVisibilityListener onKeyboardVisibilityListener) {
         final View parentView = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
         parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -393,19 +315,6 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         }
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "IMG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        return File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-    }
-
     public void onSearchClicked(View v) {
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(intent);
@@ -556,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         mWebView.goBack();
         String url = mWebView.getOriginalUrl();
         WebBackForwardList currentHistory = mWebView.copyBackForwardList();
-        WebHistoryItem prevURL = currentHistory.getItemAtIndex(currentHistory.getCurrentIndex()-1);
+        //WebHistoryItem prevURL = currentHistory.getItemAtIndex(currentHistory.getCurrentIndex()-1);
         if(url.startsWith("http://www.misodiary.net/main/opench")) {
             mTextMessage.setText(R.string.title_opench);
         } else if(url.startsWith("https://www.misodiary.net/board/findfriends")) {
