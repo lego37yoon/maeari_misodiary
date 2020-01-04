@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     mTextMessage.setText(R.string.title_profile);
                     mWebView.loadUrl("http://www.misodiary.net/board/daytime");
                     break;
+                default:
+                    mTextMessage.setText(R.string.title_opench);
+                    mWebView.loadUrl("http://www.misodiary.net");
+                    break;
             }
         } else {
             //설정된 메인화면 값에 따라 화면 변경
