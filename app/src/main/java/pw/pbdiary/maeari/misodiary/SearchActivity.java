@@ -137,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mWebView.loadUrl("http://www.misodiary.net/search?skeyword="+query);
+                mWebView.loadUrl("http://m3day.cafe24.com/search?skeyword="+query);
                 return false;
             }
 
@@ -156,7 +156,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             mSearchView.setQuery(queryToString, false);
             mSearchView.clearFocus();
-            mWebView.loadUrl("http://www.misodiary.net/search?skeyword=" + queryToString);
+            mWebView.loadUrl("http://m3day.cafe24.com/search?skeyword=" + queryToString);
         }
         SwipeRefreshLayout pullrefresh = findViewById(R.id.searchRefresher);
         pullrefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
@@ -182,20 +182,20 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if (url.startsWith("http://www.misodiary.net/board")) {
-                /* if (url.startsWith("https://www.misodiary.net/main/opench/?keyword=")) {
+            if (url.startsWith("http://m3day.cafe24.com/board")) {
+                /* if (url.startsWith("https://m3day.cafe24.com/main/opench/?keyword=")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);
                     String status = "opench";
                     intent.putExtra("status",status);
                 } */
-                if (url.startsWith("http://www.misodiary.net/board/me2day")||url.startsWith("http://www.misodiary.net/board/eatmetoo")) {
+                if (url.startsWith("http://m3day.cafe24.com/board/me2day")||url.startsWith("http://m3day.cafe24.com/board/eatmetoo")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);
                     String status = "opench";
                     intent.putExtra("status",status);
                 }
-                else if (url.startsWith("http://www.misodiary.net/board/findfriend")) {
+                else if (url.startsWith("http://m3day.cafe24.com/board/findfriend")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "michinrandom";
                     i.putExtra("status",status);
@@ -204,19 +204,19 @@ public class SearchActivity extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
-            } else if(url.startsWith("http://www.misodiary.net/board/daytime")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/board/daytime")) {
                 Intent i = new Intent(getApplicationContext(),MainActivity.class);
                 String status = "profile";
                 i.putExtra("status",status);
                 startActivity(i);
-            } else if(url.startsWith("http://www.misodiary.net/notification")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/notification")) {
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/mypage")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/mypage")) {
                 Intent i = new Intent(getApplicationContext(), MyAccountActivity.class);
                 startActivity(i);
-            } else if(url.startsWith("http://www.misodiary.net/search?")) {
-                /*String keywordInternal = url.replace("http://www.misodiary.net/search?skeyword=","");
+            } else if(url.startsWith("http://m3day.cafe24.com/search?")) {
+                /*String keywordInternal = url.replace("http://m3day.cafe24.com/search?skeyword=","");
                 String keywordReadable = null;
                 try {
                     keywordReadable = URLDecoder.decode(keywordInternal,"UTF-8");
@@ -226,18 +226,18 @@ public class SearchActivity extends AppCompatActivity {
                 mSearchView.setQuery(keywordReadable,false);
                 mSearchView.clearFocus(); */
                 mWebView.loadUrl(url);
-            } else if(url.startsWith("http://www.misodiary.net/post")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/post")) {
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                String postNumber = url.replace("http://www.misodiary.net/post/","");
+                String postNumber = url.replace("http://m3day.cafe24.com/post/","");
                 intent.putExtra("postNumber",postNumber);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/profile")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/profile")) {
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("http://www.misodiary.net/profile/","");
+                String accountID = url.replace("http://m3day.cafe24.com/profile/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
             } else if(url.startsWith("http://www.misodairy.net")){
-                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net/")) {
+                if(url.equals("https://m3day.cafe24.com")||url.equals("https://m3day.cafe24.com/")||url.equals("http://m3day.cafe24.com/")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "opench";
                     intent.putExtra("status", status);

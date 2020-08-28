@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         CookieManager cM = CookieManager.getInstance();
         if(cookie.getString("cookie","") != null) {
             Log.d("COOKIE",cookie.getString("cookie",""));
-            cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+            cM.setCookie("m3day.cafe24.com",cookie.getString("cookie",""));
         }
 
         //불러오는 페이지에 따라 글자 변경
@@ -101,19 +101,19 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             switch (status) {
                 case "opench":
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("http://www.misodiary.net/");
+                    mWebView.loadUrl("http://m3day.cafe24.com/");
                     break;
                 case "michinrandom":
                     mTextMessage.setText(R.string.title_michinrandom);
-                    mWebView.loadUrl("http://www.misodiary.net/board/findfriend");
+                    mWebView.loadUrl("http://m3day.cafe24.com/board/findfriend");
                     break;
                 case "profile":
                     mTextMessage.setText(R.string.title_profile);
-                    mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+                    mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
                     break;
                 default:
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("http://www.misodiary.net");
+                    mWebView.loadUrl("http://m3day.cafe24.com");
                     break;
             }
         } else {
@@ -126,23 +126,23 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                     editor.putString("status","opench");
                     editor.apply();
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("http://www.misodiary.net");
+                    mWebView.loadUrl("http://m3day.cafe24.com");
                     break;
                 case "michinrandom":
                     editor.putString("status","michinrandom");
                     editor.apply();
                     mTextMessage.setText(R.string.title_michinrandom);
-                    mWebView.loadUrl("http://www.misodiary.net/board/findfriend");
+                    mWebView.loadUrl("http://m3day.cafe24.com/board/findfriend");
                     break;
                 case "profile":
                     editor.putString("status","profile");
                     editor.apply();
                     mTextMessage.setText(R.string.title_profile);
-                    mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+                    mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
                     break;
                 default:
                     mTextMessage.setText(R.string.title_opench);
-                    mWebView.loadUrl("http://www.misodiary.net");
+                    mWebView.loadUrl("http://m3day.cafe24.com");
                     break;
             }
         }
@@ -203,31 +203,31 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if(url.startsWith("http://www.misodiary.net/notification")) {
+            if(url.startsWith("http://m3day.cafe24.com/notification")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/search?skeyword=")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                String keyword = url.replace("http://www.misodiary.net/search?skeyword=","");
+                String keyword = url.replace("http://m3day.cafe24.com/search?skeyword=","");
                 intent.putExtra("keyword",keyword);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/post")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/post")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                String postNumber = url.replace("http://www.misodiary.net/post/","");
+                String postNumber = url.replace("http://m3day.cafe24.com/post/","");
                 intent.putExtra("postNumber",postNumber);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/profile/")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/profile/")) {
                 view.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("http://www.misodiary.net/profile/","");
+                String accountID = url.replace("http://m3day.cafe24.com/profile/","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/login?url=")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/login?url=")) {
                 view.setVisibility(View.INVISIBLE);
-            } else if(url.startsWith("http://www.misodiary.net")) {
+            } else if(url.startsWith("http://m3day.cafe24.com")) {
                 view.loadUrl(url);
             } else {
                 misoCustomTab c = new misoCustomTab();
@@ -238,35 +238,35 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            if(url.startsWith("http://www.misodiary.net/board/findfriend")) {
+            if(url.startsWith("http://m3day.cafe24.com/board/findfriend")) {
                 mTextMessage.setText(R.string.title_michinrandom);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","michinrandom");
                 editor.apply();
-            } else if(url.startsWith("https://www.misodiary.net/main/random_friends")) {
+            } else if(url.startsWith("https://m3day.cafe24.com/main/random_friends")) {
                 mTextMessage.setText(R.string.title_opench);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","opench");
                 editor.apply();
-            } else if(url.startsWith("http://www.misodiary.net/board/daytime")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/board/daytime")) {
                 mTextMessage.setText(R.string.title_profile);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","profile");
                 editor.apply();
-            } else if(url.startsWith("http://www.misodiary.net/board")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/board")) {
                 mTextMessage.setText(R.string.title_opench);
                 SharedPreferences statusSave= getSharedPreferences("status",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = statusSave.edit();
                 editor.putString("status","opench");
                 editor.apply();
-            } else if(url.startsWith("http://www.misodiary.net/login?url=")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/login?url=")) {
                 Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
-                loginIntent.putExtra("status",url.replace("http://www.misodiary.net/login?url=",""));
-            } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+                loginIntent.putExtra("status",url.replace("http://m3day.cafe24.com/login?url=",""));
+            } else if(url.startsWith("https://m3day.cafe24.com")||url.startsWith("http://m3day.cafe24.com")){
+                if(url.equals("https://m3day.cafe24.com")||url.equals("https://m3day.cafe24.com/")||url.equals("http://m3day.cafe24.com")||url.equals("http://m3day.cafe24.com/")) {
                     mTextMessage.setText(R.string.title_opench);
                 }
             }
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
             CookieManager cM = CookieManager.getInstance();
             cM.setAcceptCookie(true);
             if(cookie.getString("cookie","") != null) {
-                cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+                cM.setCookie("m3day.cafe24.com",cookie.getString("cookie",""));
             }
         }
         @Override
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         SharedPreferences.Editor editor2 = forProfileOnly.edit();
         editor2.putString("ifP","true");
         editor2.apply();
-        mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+        mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
 
     }
 
@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                 SharedPreferences mainscdefault = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences forProfile = getSharedPreferences("ifP",Context.MODE_PRIVATE);
                 CookieManager cM = CookieManager.getInstance();
-                cM.setCookie("www.misodiary.net", data.getStringExtra("cookie"));
+                cM.setCookie("m3day.cafe24.com", data.getStringExtra("cookie"));
                 if (data.getStringExtra("status") != null) {
                     String status = getIntent().getStringExtra("status");
                     switch (status) {
@@ -388,32 +388,32 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
                             mTextMessage.setText(R.string.title_opench);
                             if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile")|| Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                                 mTextMessage.setText(R.string.title_profile);
-                                mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+                                mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
                                 SharedPreferences.Editor editor = forProfile.edit();
                                 editor.putString("ifP","false");
                                 editor.apply();
                             } else {
-                                mWebView.loadUrl("http://www.misodiary.net/");
+                                mWebView.loadUrl("http://m3day.cafe24.com/");
                             }
                             break;
                         case "michinrandom":
                             mTextMessage.setText(R.string.title_michinrandom);
-                            mWebView.loadUrl("http://www.misodiary.net/board/findfriends");
+                            mWebView.loadUrl("http://m3day.cafe24.com/board/findfriends");
                             break;
                         case "profile":
                             mTextMessage.setText(R.string.title_profile);
-                            mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+                            mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
                             break;
                     }
                 } else {
                     if (Objects.requireNonNull(mainscdefault.getString("screendefault", "opench")).equals("profile") || Objects.requireNonNull(forProfile.getString("ifP", "false")).equals("true")) {
                         mTextMessage.setText(R.string.title_profile);
-                        mWebView.loadUrl("http://www.misodiary.net/board/daytime");
+                        mWebView.loadUrl("http://m3day.cafe24.com/board/daytime");
                         SharedPreferences.Editor editor = forProfile.edit();
                         editor.putString("ifP","false");
                         editor.apply();
                     } else {
-                        mWebView.loadUrl("http://www.misodiary.net/");
+                        mWebView.loadUrl("http://m3day.cafe24.com/");
                     }
                 }
             }
@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         SharedPreferences cookie = getSharedPreferences("cookie",Context.MODE_PRIVATE);
         CookieManager cM = CookieManager.getInstance();
         if(cookie.getString("cookie","") != null) {
-            cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+            cM.setCookie("m3day.cafe24.com",cookie.getString("cookie",""));
         }
         super.onResume();
     }
@@ -470,37 +470,37 @@ public class MainActivity extends AppCompatActivity implements OnKeyboardVisibil
         String url = mWebView.getOriginalUrl();
         WebBackForwardList currentHistory = mWebView.copyBackForwardList();
         //WebHistoryItem prevURL = currentHistory.getItemAtIndex(currentHistory.getCurrentIndex()-1);
-        if(url.startsWith("http://www.misodiary.net/main/opench")) {
+        if(url.startsWith("http://m3day.cafe24.com/main/opench")) {
             mTextMessage.setText(R.string.title_opench);
-        } else if(url.startsWith("https://www.misodiary.net/board/findfriends")) {
+        } else if(url.startsWith("https://m3day.cafe24.com/board/findfriends")) {
             mTextMessage.setText(R.string.title_michinrandom);
-        } else if(url.startsWith("https://www.misodiary.net/board/daytime")) {
+        } else if(url.startsWith("https://m3day.cafe24.com/board/daytime")) {
             mTextMessage.setText(R.string.title_profile);
-        } else if(url.startsWith("http://www.misodiary.net/board")) {
+        } else if(url.startsWith("http://m3day.cafe24.com/board")) {
             mTextMessage.setText(getResources().getString(R.string.title_opench));
-        } else if(url.startsWith("http://www.misodiary.net/notification")) {
+        } else if(url.startsWith("http://m3day.cafe24.com/notification")) {
             Intent intent = new Intent(getApplicationContext(), NotiActivity.class);
             startActivity(intent);
-        } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
+        } else if(url.startsWith("http://m3day.cafe24.com/search?skeyword=")) {
             Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-            String keyword = url.replace("http://www.misodiary.net/search?skeyword=","");
+            String keyword = url.replace("http://m3day.cafe24.com/search?skeyword=","");
             intent.putExtra("keyword",keyword);
             startActivity(intent);
-        } else if(url.startsWith("https://www.misodiary.net/post")) {
+        } else if(url.startsWith("https://m3day.cafe24.com/post")) {
             Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-            String postNumber = url.replace("https://www.misodiary.net/post/","");
+            String postNumber = url.replace("https://m3day.cafe24.com/post/","");
             intent.putExtra("postNumber",postNumber);
             startActivity(intent);
-        } else if(url.startsWith("http://www.misodiary.net/profile")) {
+        } else if(url.startsWith("http://m3day.cafe24.com/profile")) {
             Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-            String accountID = url.replace("http://www.misodiary.net/profile/","");
+            String accountID = url.replace("http://m3day.cafe24.com/profile/","");
             intent.putExtra("accountID",accountID);
             startActivity(intent);
-        } /* else if(url.startsWith("https://www.misodiary.net/member/login")) {
+        } /* else if(url.startsWith("https://m3day.cafe24.com/member/login")) {
             mWebView.goBackOrForward(mWebView.copyBackForwardList().getCurrentIndex()-2);
             backControl(mWebView);
-        } */ else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-            if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+        } */ else if(url.startsWith("https://m3day.cafe24.com")||url.startsWith("http://m3day.cafe24.com")){
+            if(url.equals("https://m3day.cafe24.com")||url.equals("https://m3day.cafe24.com/")||url.equals("http://m3day.cafe24.com")||url.equals("http://m3day.cafe24.com/")) {
                 mTextMessage.setText(R.string.title_opench);
             }
         } else {

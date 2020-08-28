@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         mWebView = findViewById(R.id.loginWebView);
         mWebView.setWebViewClient(new loginweb());
 
-        mWebView.loadUrl("http://www.misodiary.net/login");
+        mWebView.loadUrl("http://m3day.cafe24.com/login");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         TextInputEditText mIDField = findViewById(R.id.misoIDField);
@@ -86,11 +86,11 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void onFindIDPWClicked(View view) {
         misoCustomTab c = new misoCustomTab();
-        c.launch(LoginActivity.this,"https://www.misodiary.net/pages/id_lost");
+        c.launch(LoginActivity.this,"https://m3day.cafe24.com/pages/id_lost");
     }
     public void onRegisterClicked(View view) {
         misoCustomTab c = new misoCustomTab();
-        c.launch(LoginActivity.this,"https://www.misodiary.net/member/register");
+        c.launch(LoginActivity.this,"https://m3day.cafe24.com/member/register");
     }
 
     public void onPreviousClicked(View view) {
@@ -190,18 +190,18 @@ public class LoginActivity extends AppCompatActivity {
             CookieManager cM = CookieManager.getInstance();
             TextInputEditText mIDField = (TextInputEditText) findViewById(R.id.misoIDField);
             TextInputEditText mPWField = (TextInputEditText) findViewById(R.id.misoPWField);
-            String prevCookie = cM.getCookie("www.misodiary.net");
+            String prevCookie = cM.getCookie("m3day.cafe24.com");
             try {
-                Connection.Response loginTokenRes = Jsoup.connect("https://www.misodiary.net/api_member/auth_token")
+                Connection.Response loginTokenRes = Jsoup.connect("https://m3day.cafe24.com/api_member/auth_token")
                         .userAgent(ua)
-                        .referrer("https://www.misodiary.net/member/login")
+                        .referrer("https://m3day.cafe24.com/member/login")
                         .followRedirects(true)
                         .ignoreContentType(true)
                         .postDataCharset("UTF-8")
-                        .header("Host","www.misodiary.net")
+                        .header("Host","m3day.cafe24.com")
                         .header("Connection","keep-alive")
                         .header("Accept","*/*")
-                        .header("Origin","https://www.misodiary.net")
+                        .header("Origin","https://m3day.cafe24.com")
                         .header("X-Requested-With","XMLHttpRequest")
                         .header("Accept-Encoding","gzip, deflate")
                         .header("Accept-Language","ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
@@ -213,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                     Snackbar.make(v,getResources().getString(R.string.loginFailed),Snackbar.LENGTH_LONG).show();
                     return "failed";
                 } else {
-                    cM.setCookie("https://www.misodiary.net","ci_session="+loginTokenRes.cookie("ci_session"));
+                    cM.setCookie("https://m3day.cafe24.com","ci_session="+loginTokenRes.cookie("ci_session"));
                     return loginTokenRes.cookie("ci_session");
                 }
             } catch (IOException e) {
@@ -233,9 +233,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginprocess(String loginedCookie) {
         CookieManager cM = CookieManager.getInstance();
-        cM.setCookie("https://www.misodiary.net","ci_session="+loginedCookie);
+        cM.setCookie("https://m3day.cafe24.com","ci_session="+loginedCookie);
         SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
-        String cookieEn = cM.getCookie("www.misodiary.net");
+        String cookieEn = cM.getCookie("m3day.cafe24.com");
         SharedPreferences.Editor editor = cookie.edit();
         editor.putString("cookie",cookieEn);
         editor.apply();
@@ -294,9 +294,9 @@ public class LoginActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
             CookieManager cM = CookieManager.getInstance();
-            if (!url.startsWith("http://www.misodiary.net/login?=")) {
+            if (!url.startsWith("http://m3day.cafe24.com/login?=")) {
                 SharedPreferences cookie = getSharedPreferences("cookie", Context.MODE_PRIVATE);
-                String cookieEn = cM.getCookie("www.misodiary.net");
+                String cookieEn = cM.getCookie("m3day.cafe24.com");
                 SharedPreferences.Editor editor = cookie.edit();
                 editor.putString("cookie",cookieEn);
                 editor.apply();

@@ -65,7 +65,7 @@ public class AgreementActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try{
-                Document doc = Jsoup.connect("http://www.misodiary.net/document/provision").get();
+                Document doc = Jsoup.connect("http://m3day.cafe24.com/document/provision").get();
                 elementone = doc.select("div[class=row]").eq(0);
             } catch (UnknownHostException e) {
                 Looper.prepare();
@@ -96,7 +96,7 @@ public class AgreementActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try{
-                Document doc = Jsoup.connect("http://www.misodiary.net/document/privacy").get();
+                Document doc = Jsoup.connect("http://m3day.cafe24.com/document/privacy").get();
                 elementtwo = doc.select("div[class=row]").eq(0);
             } catch (UnknownHostException e) {
                 Looper.prepare();

@@ -54,7 +54,7 @@ public class NotiActivity extends AppCompatActivity {
         });
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new misoWeb3());
-        mWebView.loadUrl("http://www.misodiary.net/notification");
+        mWebView.loadUrl("http://m3day.cafe24.com/notification");
         SwipeRefreshLayout pullrefresh = findViewById(R.id.notiRefresher);
         pullrefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
         pullrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -68,44 +68,44 @@ public class NotiActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest urls) {
             String url = urls.getUrl().toString();
-            if (url.startsWith("http://www.misodiary.net/board")) {
-                if (url.startsWith("http://www.misodiary.net/board/daytime")) {
+            if (url.startsWith("http://m3day.cafe24.com/board")) {
+                if (url.startsWith("http://m3day.cafe24.com/board/daytime")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "profile";
                     i.putExtra("status",status);
                     startActivity(i);
-                } else if (url.startsWith("http://www.misodiary.net/findfriend")) {
+                } else if (url.startsWith("http://m3day.cafe24.com/findfriend")) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "michinrandom";
                     i.putExtra("status",status);
                     startActivity(i);
-                } else if (url.startsWith("http://www.misodiary.net/board")) {
+                } else if (url.startsWith("http://m3day.cafe24.com/board")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("openKeyword", url);
                 } else {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
-            } else if(url.startsWith("http://www.misodiary.net/search?skeyword=")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/search?skeyword=")) {
                 Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
-                String keyword = url.replace("http://www.misodiary.net/search?skeyword=","");
+                String keyword = url.replace("http://m3day.cafe24.com/search?skeyword=","");
                 intent.putExtra("keyword",keyword);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/post")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/post")) {
                 Intent intent = new Intent(getApplicationContext(),PostViewActivity.class);
-                String postNumber = url.replace("http://www.misodiary.net/post/","");
+                String postNumber = url.replace("http://m3day.cafe24.com/post/","");
                 intent.putExtra("postNumber",postNumber);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/mypage")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/mypage")) {
                 Intent intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
-                String accountID = url.replace("http://www.misodiary.net/mypage","");
+                String accountID = url.replace("http://m3day.cafe24.com/mypage","");
                 intent.putExtra("accountID",accountID);
                 startActivity(intent);
-            } else if(url.startsWith("http://www.misodiary.net/login")) {
+            } else if(url.startsWith("http://m3day.cafe24.com/login")) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivityForResult(intent,2);
-            } else if(url.startsWith("https://www.misodiary.net")||url.startsWith("http://www.misodiary.net")){
-                if(url.equals("https://www.misodiary.net")||url.equals("https://www.misodiary.net/")||url.equals("http://www.misodiary.net")||url.equals("http://www.misodiary.net/")) {
+            } else if(url.startsWith("https://m3day.cafe24.com")||url.startsWith("http://m3day.cafe24.com")){
+                if(url.equals("https://m3day.cafe24.com")||url.equals("https://m3day.cafe24.com/")||url.equals("http://m3day.cafe24.com")||url.equals("http://m3day.cafe24.com/")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     String status = "opench";
                     intent.putExtra("status", status);
@@ -130,7 +130,7 @@ public class NotiActivity extends AppCompatActivity {
             CookieManager cM = CookieManager.getInstance();
             cM.setAcceptCookie(true);
             if(cookie.getString("cookie","") != null) {
-                cM.setCookie("www.misodiary.net",cookie.getString("cookie",""));
+                cM.setCookie("m3day.cafe24.com",cookie.getString("cookie",""));
             }
         }
         @Override
@@ -178,8 +178,8 @@ public class NotiActivity extends AppCompatActivity {
         if(requestCode == 2 && resultCode==RESULT_OK) {
             if(data.getStringExtra("cookie")!=null) {
                 CookieManager cM = CookieManager.getInstance();
-                cM.setCookie("www.misodiary.net",data.getStringExtra("cookie"));
-                mWebView.loadUrl("http://www.misodiary.net/notification");
+                cM.setCookie("m3day.cafe24.com",data.getStringExtra("cookie"));
+                mWebView.loadUrl("http://m3day.cafe24.com/notification");
             } else {
                 finish();
             }
@@ -191,6 +191,6 @@ public class NotiActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mWebView.loadUrl("http://www.misodiary.net/notification");
+        mWebView.loadUrl("http://m3day.cafe24.com/notification");
     }
 }
