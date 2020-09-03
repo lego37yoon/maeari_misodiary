@@ -10,14 +10,12 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout3"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FAFAFA"
-        app:expanded="false"
-        app:liftOnScroll="true">
+        android:layout_height="wrap_content"
+        android:background="@color/mainAppBarDay">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/menu_search"
@@ -41,53 +39,86 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="16dp"
                 android:text="@string/title_home"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/text_color_primary"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="enterAlways|scroll|exitUntilCollapsed">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:id="@+id/chipIlsang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedIconEnabled="true"
+                        app:checkedIcon="@drawable/ic_round_dashboard_24"
+                        android:text="@string/title_profile"
+                        android:fontFamily="@font/bmhanna_air_ttf"
+                        android:checked="true"/>
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:id="@+id/chipToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedIconEnabled="true"
+                        app:checkedIcon="@drawable/ic_round_person_pin_circle_24"
+                        android:text="@string/title_today"
+                        android:fontFamily="@font/bmhanna_air_ttf"/>
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:id="@+id/chipMichinrandom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedIconEnabled="true"
+                        app:checkedIcon="@drawable/ic_round_new_releases_24"
+                        android:text="@string/title_michinrandom"
+                        android:fontFamily="@font/bmhanna_air_ttf"/>
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:id="@+id/chipFoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedIconEnabled="true"
+                        app:checkedIcon="@drawable/ic_round_fastfood_24"
+                        android:text="@string/title_food"
+                        android:fontFamily="@font/bmhanna_air_ttf"/>
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="618dp"
+        app:layout_anchor="@+id/navigation"
+        app:layout_anchorGravity="bottom|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <WebView
             android:id="@+id/webView"
             android:layout_width="0dp"
             android:layout_height="0dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_gravity="bottom"
-        app:backgroundTint="@color/colorPrimary"
-        app:buttonGravity="bottom|top"
-        app:fabAlignmentMode="end"
-        app:navigationIcon="@drawable/ic_menu_white_24dp">
-
-        <ImageButton
-            android:id="@+id/menu_noti"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/menu_description_noti"
-            android:onClick="onNotiClicked"
-            app:srcCompat="@drawable/ic_notifications_black_24dp" />
-
-        <ImageButton
-            android:id="@+id/menu_myaccount"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/menu_description_myaccount"
-            android:onClick="onMyAccountClicked"
-            app:srcCompat="@drawable/ic_build_black_24dp" />
-    </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newArticle"
@@ -101,4 +132,15 @@
         app:layout_anchor="@id/navigation"
         app:srcCompat="@drawable/ic_edit_white_24dp"
         app:tint="@android:color/white" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabAlignmentMode="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

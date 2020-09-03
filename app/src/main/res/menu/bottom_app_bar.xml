@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_noti"
+        android:title="@string/title_noti"
+        android:contentDescription="@string/menu_description_noti"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_notifications_black_24dp" />
+    <item
+        android:id="@+id/menu_myaccount"
+        android:title="@string/title_my_account"
+        android:contentDescription="@string/menu_description_myaccount"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_build_black_24dp" />
+    <item
+        android:id="@+id/menu_logout"
+        android:title="@string/logout"
+        android:contentDescription="@string/logout"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_logout_black_24px" />
+</menu>

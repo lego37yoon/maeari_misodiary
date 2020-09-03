@@ -88,7 +88,7 @@
 
             <Button
                 android:id="@+id/goopenlicense"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onOSLClicked"
@@ -99,7 +99,7 @@
 
             <Button
                 android:id="@+id/gomaeariproject"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onMaeariClicked"
@@ -110,7 +110,7 @@
 
             <Button
                 android:id="@+id/gomisodproject"
-                style="@android:style/Widget.Material.Button.Borderless.Colored"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onMisoClicked"

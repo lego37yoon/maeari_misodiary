@@ -91,4 +91,6 @@
     <string name="setting_darkmode_light">밝은 테마</string>
     <string name="setting_darkmode_dark">어두운 테마</string>
     <string name="setting_darkmode_bs">배터리 절약 모드에 따름</string>
+    <string name="title_food">식미투</string>
+    <string name="title_today">나오늘지금</string>
 </resources>

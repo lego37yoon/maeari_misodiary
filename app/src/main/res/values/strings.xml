@@ -7,6 +7,8 @@
     <string name="title_opench">OPENCH.</string>
     <string name="title_michinrandom">FIND FRIENDS</string>
     <string name="title_profile">DAYTIME</string>
+    <string name="title_today">MY TODAY</string>
+    <string name="title_food">FOODS</string>
     <string name="menu_description_search">Search</string>
     <string name="menu_description_noti">Notifications</string>
     <string name="menu_description_myaccount">My Account</string>

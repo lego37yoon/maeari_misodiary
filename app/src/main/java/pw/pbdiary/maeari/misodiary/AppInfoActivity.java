@@ -33,7 +33,7 @@ public class AppInfoActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void onMisoClicked(View v) {
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.misodiary.net"));
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m3day.cafe24.com"));
         startActivity(i);
     }
 }
